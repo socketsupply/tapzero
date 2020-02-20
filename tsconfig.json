@@ -1,0 +1,39 @@
+{
+    "compilerOptions": {
+      "rootDir": ".",
+      "outDir": "build",
+      "target": "ES2017",
+      "types": ["node"],
+      "lib": ["es2017"],
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "allowJs": true,
+      "importHelpers": true,
+      "alwaysStrict": true,
+      "sourceMap": true,
+      "forceConsistentCasingInFileNames": true,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitReturns": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "noStrictGenericChecks": false,
+      "checkJs": false,
+      "strict": true,
+      "baseUrl": "./",
+      "paths": {
+        "@pre-bundled/rimraf": ["./types/pre-bundled__rimraf"],
+        "@pre-bundled/tape": ["./types/pre-bundled__tape"],
+        "*" : ["./types/*"]
+      },
+      "strictNullChecks": true,
+      "strictFunctionTypes": true
+    },
+    "include": [
+      "types/**/*.d.ts",
+      "src/**/*",
+      "test/**/*"
+    ]
+  }
