@@ -1,6 +1,6 @@
 {
   "name": "tapzero",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Smallest test library",
   "main": "build/src/index.js",
   "scripts": {
@@ -26,7 +26,9 @@
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.4.2"
   },
-  "files": ["build/src"],
+  "files": [
+    "build/src"
+  ],
   "author": "Raynos <raynos2@gmail.com>",
   "repository": "git://github.com/Raynos/tapzero.git",
   "homepage": "https://github.com/Raynos/tapzero",
