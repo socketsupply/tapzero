@@ -1,13 +1,14 @@
 'use strict'
 
-import * as test from 'tape'
-import * as tapzero from './index.ts'
+import * as test from '@pre-bundled/tape'
+import { Harness } from './index'
+
+const TAP_HEADER = "TAP version 13"
 
 test("tassert outputs TAP", function (assert) {
-    var a = tassert("test one")
-    a.stream.pipe(toArray(function (list) {
-        var first = list.slice(0, 15)
-        var last = list.slice(-6)
+    const h = new Harness(function (list) {
+        const first = list.slice(0, 15)
+        const last = list.slice(-6)
 
         assert.deepEqual(first, [
             TAP_HEADER
@@ -37,11 +38,11 @@ test("tassert outputs TAP", function (assert) {
         ])
 
         assert.end()
-    }))
+    })
 
-    a(true)
-    a(true, "message")
-    a(false, "some message")
-
-    a.end()
+    h.add('test one', (t) => {
+        t.ok(true)
+        t.ok(true, "message")
+        t.ok(false, "some message")
+    }, false)
 })

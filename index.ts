@@ -2,30 +2,91 @@
 
 /** TODO: Copy fast-deep-equal */
 
+type TestFn = (t: Test) => (void | Promise<void>);
+
+interface AssertInfo {
+    pass: Boolean,
+    actual: unknown,
+    expected: unknown,
+    description: string,
+    operator: string
+}
+
 class Test {
     name: string;
-    fn: (t: Test) => (void | Promise<void>);
+    fn: TestFn;
 
-    constructor (name, fn) {
+    constructor (name: string, fn: TestFn) {
         this.name = name;
         this.fn = fn;
     }
 
-    deepEqual(): void {}
-    equal(): void {}
-    fail(): void {}
-    ifError(): void {}
-    notDeepEqual(): void {}
-    notEqual(): void {}
-    ok(): void {}
+    deepEqual<T>(actual: T, expected: T, msg?: string): void {}
+    equal<T>(actual: T, expected: T, msg?: string): void {
+        this._assert({
+            pass: actual == expected,
+            actual,
+            expected,
+            description: msg || 'should be equal',
+            operator: 'equal'
+        })
+    }
+    fail(msg?: string): void {
+        this._assert({
+            pass: false,
+            actual: 'fail called',
+            expected: 'fail not called',
+            description: msg || 'fail called',
+            operator: 'fail'
+        })
+    }
+    ifError(err: Error, msg?: string): void {
+        this._assert({
+            pass: !err,
+            actual: err,
+            expected: 'no error',
+            description: msg || String(err),
+            operator: 'ifError'
+        })
+    }
+    notDeepEqual<T>(actual: T, expected: T, msg?: string): void {}
+    notEqual(actual: unknown, expected: unknown, msg?: string): void {
+        this._assert({
+            pass: actual != expected,
+            actual,
+            expected,
+            description: msg || 'should not be equal',
+            operator: 'equal'
+        })
+    }
+
+    ok(actual: unknown, msg?: string): void {
+        this._assert({
+            pass: Boolean(actual),
+            actual,
+            expected: 'truthy value',
+            description: msg || 'should be truthy',
+            operator: 'ok'
+        })
+    }
+
+    _assert(info: AssertInfo) {
+
+    }
 }
 
-class Harness {
+export class Harness {
     tests: Test[] = [];
     onlyTests: Test[] = [];
     scheduled: boolean = false;
+    report?: (lines: string[]) => void
 
-    add (t: Test, only: boolean) {
+    constructor (report?: (lines: string[]) => void) {
+        this.report = report;
+    }
+
+    add (name: string, fn: TestFn, only: boolean) {
+        const t = new Test(name, fn);
         const arr = only ? this.onlyTests : this.tests;
         arr.push(t);
         if (!this.scheduled) {
@@ -41,22 +102,19 @@ class Harness {
 }
 
 const GLOBAL_HARNESS = new Harness();
-test.only = only;
-test.skip = skip;
-export = test;
 
-function test(name, fn) {
-    const t = new Test(name, fn);
-    GLOBAL_HARNESS.add(t, false);
+export function test(name: string, fn?: TestFn) {
+    if (!fn) return
+    GLOBAL_HARNESS.add(name, fn, false);
 }
 
-function only(name, fn) {
-    const t = new Test(name, fn);
-    GLOBAL_HARNESS.add(t, true);
+export function only(name: string, fn?: TestFn) {
+    if (!fn) return
+    GLOBAL_HARNESS.add(name, fn, true);
 }
 
-function skip() {}
+export function skip(name: string, fn?: TestFn) {}
 
-function rethrowImmediate (err) {
+function rethrowImmediate (err: Error) {
     setTimeout(() => { throw err; }, 0)
 }
