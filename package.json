@@ -1,0 +1,45 @@
+{
+  "name": "tapzero",
+  "version": "0.1.0",
+  "description": "Smallest test library",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "npm run build && npm run cover -s && npm run check-cover -s",
+    "build": "npr tsc --pretty -p .",
+    "build:watch": "npr tsc --pretty -p . -w",
+    "cover": "npr nyc -x build/test -r text -r html -- ./build/test.js",
+    "check-cover": "npr nyc check-coverage --branches=25 --lines=50 --functions=50",
+    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n;' fast-deep-equal.js",
+    "view-cover": "npr opn ./coverage/index.html"
+  },
+  "dependencies": {},
+  "binDependencies": {
+    "nyc": "13.3.0",
+    "opn": "1.0.1",
+    "typescript": "3.7.2"
+  },
+  "devDependencies": {
+    "@pre-bundled/tape": "4.11.0",
+    "@types/node": "13.7.4",
+    "fast-deep-equal": "3.1.1",
+    "npm-bin-deps": "1.4.2"
+  },
+  "author": "Raynos <raynos2@gmail.com>",
+  "repository": "git://github.com/Raynos/tapzero.git",
+  "homepage": "https://github.com/Raynos/tapzero",
+  "bugs": {
+    "url": "https://github.com/Raynos/tapzero/issues",
+    "email": "raynos2@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Raynos"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/Raynos/tapzero/raw/master/LICENSE"
+    }
+  ]
+}
