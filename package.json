@@ -26,6 +26,7 @@
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.4.2"
   },
+  "files": ["build/src"],
   "author": "Raynos <raynos2@gmail.com>",
   "repository": "git://github.com/Raynos/tapzero.git",
   "homepage": "https://github.com/Raynos/tapzero",
