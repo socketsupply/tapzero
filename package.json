@@ -2,12 +2,12 @@
   "name": "tapzero",
   "version": "0.1.0",
   "description": "Smallest test library",
-  "main": "build/index.js",
+  "main": "build/src/index.js",
   "scripts": {
     "test": "npm run build && npm run cover -s && npm run check-cover -s",
-    "build": "npr tsc --pretty -p .",
-    "build:watch": "npr tsc --pretty -p . -w",
-    "cover": "npr nyc -x build/test -r text -r html -- ./build/test.js",
+    "build": "npr tsc -p . && npr sucrase -p .",
+    "build:watch": "npr onchange '{src,test}/**/*.{ts,js}' -- npr sucrase -p .",
+    "cover": "npr nyc -r text -r html -- node ./build/test",
     "check-cover": "npr nyc check-coverage --branches=25 --lines=50 --functions=50",
     "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n;' fast-deep-equal.js",
     "view-cover": "npr opn ./coverage/index.html"
@@ -15,7 +15,9 @@
   "dependencies": {},
   "binDependencies": {
     "nyc": "13.3.0",
+    "onchange": "6.1.0",
     "opn": "1.0.1",
+    "sucrase-raynos": "3.12.1-dev1",
     "typescript": "3.7.2"
   },
   "devDependencies": {
