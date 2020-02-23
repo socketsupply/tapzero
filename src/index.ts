@@ -17,6 +17,7 @@ const AT_REGEX = new RegExp(
 type TestFn = (t: Test) => (void | Promise<void>);
 type TestRes = { lines: string[], pass: number, fail: number }
 
+
 class Test {
     name: string;
     fn: TestFn;
@@ -76,7 +77,7 @@ class Test {
             msg || 'should be truthy', 'ok'
         )
     }
-    ifError(err: Error, msg?: string): void {
+    ifError(err?: Error | null, msg?: string): void {
         this._assert(
             !err, err, 'no error', msg || String(err), 'ifError'
         )
@@ -103,8 +104,11 @@ class Test {
         }
 
         const atErr = new Error(description)
-        const err = OBJ_TO_STRING.call(actual) === '[object Error]' ?
-            <Error> actual : atErr
+        let err = atErr
+        if (actual && OBJ_TO_STRING.call(actual) === '[object Error]') {
+            err = <Error> actual
+            actual = err.message
+        }
 
         this._result.fail++
         lines.push('  ---')
@@ -125,11 +129,11 @@ class Test {
 
         const at = findAtLineFromError(atErr)
         if (at) {
-            lines.push(`    at: ${at}`)
+            lines.push(`    at:       ${at}`)
         }
 
         lines.push(`    stack:    |-`)
-        const st = err.stack.split('\n')
+        const st = (err.stack || '').split('\n')
         for (const line of st) {
             lines.push(`      ${line}`)
         }
@@ -186,6 +190,7 @@ export class Harness {
     }
 
     add (name: string, fn: TestFn, only: boolean) {
+        // TODO: calling add() after run()
         const t = new Test(name, fn, this);
         const arr = only ? this.onlyTests : this.tests;
         arr.push(t);
@@ -208,6 +213,7 @@ export class Harness {
         let fail = 0
 
         for (const test of ts) {
+            // TODO: parallel execution
             const result = await test.run()
             this.report(result.lines)
 
@@ -243,7 +249,7 @@ export function only(name: string, fn?: TestFn) {
     GLOBAL_HARNESS.add(name, fn, true);
 }
 
-export function skip(name: string, fn?: TestFn) {}
+export function skip(_name: string, _fn?: TestFn) {}
 
 function rethrowImmediate (err: Error) {
     setTimeout(() => { throw err; }, 0)
