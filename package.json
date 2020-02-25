@@ -5,8 +5,9 @@
   "main": "build/src/index.js",
   "scripts": {
     "test": "npm run build && npm run cover -s && npm run check-cover -s",
-    "build": "npr tsc -p . && npr sucrase -p .",
-    "build:watch": "npr onchange '{src,test}/**/*.{ts,js}' -- npr sucrase -p .",
+    "build-only": "npr sucrase -p . && cp ./test/zora/fixtures/*.txt ./build/test/zora/fixtures",
+    "build": "npr tsc -p . && npm run build-only",
+    "build:watch": "npr onchange '{src,test}/**/*.{ts,js,txt}' -- npm run build-only -s",
     "cover": "npr nyc -r text -r html -- node ./build/test",
     "check-cover": "npr nyc check-coverage --branches=25 --lines=50 --functions=50",
     "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n;' fast-deep-equal.js",
