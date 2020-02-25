@@ -215,6 +215,7 @@ export class Harness {
         for (const test of ts) {
             // TODO: parallel execution
             const result = await test.run()
+            // TODO: Stream output of test lines.
             this.report(result.lines)
 
             total += result.fail + result.pass
