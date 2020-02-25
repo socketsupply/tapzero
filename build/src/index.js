@@ -215,6 +215,7 @@ function findAtLineFromError(e) {
         for (const test of ts) {
             // TODO: parallel execution
             const result = await test.run()
+            // TODO: Stream output of test lines.
             this.report(result.lines)
 
             total += result.fail + result.pass
@@ -228,6 +229,7 @@ function findAtLineFromError(e) {
             `# pass  ${success}`,
             fail > 0 ? `# fail  ${fail}` : '\n# ok'
         ])
+        // TODO: exitCode
     }
 } exports.Harness = Harness;
 
