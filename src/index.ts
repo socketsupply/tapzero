@@ -229,6 +229,7 @@ export class Harness {
             `# pass  ${success}`,
             fail > 0 ? `# fail  ${fail}` : '\n# ok'
         ])
+        // TODO: exitCode
     }
 }
 
