@@ -1,0 +1,14 @@
+TAP version 13
+# will not go to the end
+ok 1 okay
+/home/raynos/projects/tapzero/build/src/index.js:254
+    setTimeout(() => { throw err; }, 0)
+                       ^
+
+Error: Oh no!
+    at Test.fa (/home/raynos/projects/tapzero/build/test/zora/fixtures/bailout_fail.js:6:11)
+    at Test.run (/home/raynos/projects/tapzero/build/src/index.js:142:29)
+    at Harness.run (/home/raynos/projects/tapzero/build/src/index.js:214:39)
+    at Timeout._onTimeout (/home/raynos/projects/tapzero/build/src/index.js:197:22)
+    at listOnTimeout (internal/timers.js:531:17)
+    at processTimers (internal/timers.js:475:7)

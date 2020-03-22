@@ -2,15 +2,21 @@
 
 var _path = require('path'); var path = _path;
 
+const NUMBER_LINE = /^1\.\.\d+$/
+const FAIL_LINE = /^# fail  \d+$/
+
  function collect (fn) {
     const total = []
+    let almostFinished = false
 
-    return function report(lines) {
-        for (const line of lines) {
-            const moreLines = line.split('\n')
-            total.push(...moreLines)
-        }
-        if (lines[0] && lines[0].startsWith('\n1..')) {
+    return function report(line) {
+        total.push(line)
+        if (line && NUMBER_LINE.test(line)) {
+            almostFinished = true
+        } else if (almostFinished && (
+            line === '# ok' ||
+            FAIL_LINE.test(line)
+        )){
             fn(strip(total.join('\n')))
         }
     }
