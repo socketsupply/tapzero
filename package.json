@@ -5,9 +5,10 @@
   "main": "build/src/index.js",
   "scripts": {
     "test": "npm run build && npm run cover -s && npm run check-cover -s",
-    "build-only": "npr sucrase -p . && cp ./test/zora/fixtures/*.txt ./build/test/zora/fixtures",
+    "build-only": "rm -r build && npr sucrase -p . && npm run cp-files -s",
     "build": "npr tsc -p . && npm run build-only",
-    "build:watch": "npr onchange '{src,test}/**/*.{ts,js,txt}' -- npm run build-only -s",
+    "build:watch": "npm run build-only && npr onchange '{src,test}/**/*.{ts,js,txt}' -- npm run build-only -s",
+    "cp-files": "cp ./test/zora/fixtures/*.txt ./build/test/zora/fixtures",
     "cover": "npr nyc -r text -r html -- node ./build/test",
     "check-cover": "npr nyc check-coverage --branches=25 --lines=50 --functions=50",
     "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n;' fast-deep-equal.js",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@pre-bundled/tape": "4.11.0",
     "@types/node": "13.7.4",
+    "diff": "4.0.2",
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.4.2"
   },
