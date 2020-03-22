@@ -4,7 +4,6 @@ const deepEqual = require('./fast-deep-equal')
 
 const NEW_LINE_REGEX = /\n/g
 const OBJ_TO_STRING = Object.prototype.toString;
-
 const AT_REGEX = new RegExp(
     // non-capturing group for 'at '
     '^(?:[^\\s]*\\s*\\bat\\s+)' +
@@ -15,14 +14,12 @@ const AT_REGEX = new RegExp(
 )
 
 type TestFn = (t: Test) => (void | Promise<void>);
-type TestRes = { lines: string[], pass: number, fail: number }
-
 
 class Test {
     name: string;
     fn: TestFn;
     harness: Harness;
-    _result: TestRes
+    _result: { pass: number, fail: number };
     done: Boolean;
 
     constructor (name: string, fn: TestFn, h: Harness) {
@@ -30,7 +27,6 @@ class Test {
         this.fn = fn;
         this.harness = h;
         this._result = {
-            lines: ['# ' + name],
             pass: 0,
             fail: 0
         }
@@ -38,7 +34,7 @@ class Test {
     }
 
     comment(msg: string): void {
-        this._result.lines.push('# ' + msg)
+        this.harness.report('# ' + msg)
     }
 
     deepEqual<T>(actual: T, expected: T, msg?: string): void {
@@ -92,11 +88,11 @@ class Test {
             )
         }
 
-        const lines = this._result.lines
+        const report = this.harness.report
 
         const prefix = pass ? 'ok' : 'not ok'
         const id = this.harness.nextId()
-        lines.push(`${prefix} ${id} ${description}`)
+        report(`${prefix} ${id} ${description}`)
 
         if (pass) {
             this._result.pass++
@@ -111,8 +107,8 @@ class Test {
         }
 
         this._result.fail++
-        lines.push('  ---')
-        lines.push(`    operator: ${operator}`)
+        report('  ---')
+        report(`    operator: ${operator}`)
 
         let ex = JSON.stringify(expected, null, '  ')
         let ac = JSON.stringify(actual, null, '  ')
@@ -120,28 +116,29 @@ class Test {
             ex = ex.replace(NEW_LINE_REGEX, '\n      ')
             ac = ac.replace(NEW_LINE_REGEX, '\n      ')
 
-            lines.push(`    expected: |-\n      ${ex}`)
-            lines.push(`    actual:   |-\n      ${ac}`)
+            report(`    expected: |-\n      ${ex}`)
+            report(`    actual:   |-\n      ${ac}`)
         } else {
-            lines.push(`    expected: ${ex}`)
-            lines.push(`    actual:   ${ac}`)
+            report(`    expected: ${ex}`)
+            report(`    actual:   ${ac}`)
         }
 
         const at = findAtLineFromError(atErr)
         if (at) {
-            lines.push(`    at:       ${at}`)
+            report(`    at:       ${at}`)
         }
 
-        lines.push(`    stack:    |-`)
+        report(`    stack:    |-`)
         const st = (err.stack || '').split('\n')
         for (const line of st) {
-            lines.push(`      ${line}`)
+            report(`      ${line}`)
         }
 
-        lines.push('  ...')
+        report('  ...')
     }
 
-    async run (): Promise<TestRes> {
+    async run (): Promise<{ pass: number, fail: number }> {
+        this.harness.report('# ' + this.name)
         const maybeP = this.fn(this);
         if (maybeP && typeof maybeP.then === 'function') {
             await maybeP
@@ -174,11 +171,11 @@ export class Harness {
     tests: Test[];
     onlyTests: Test[];
     scheduled: boolean;
-    report: (lines: string[]) => void
+    report: (line: string) => void
     private _id: number ;
 
-    constructor (report?: (lines: string[]) => void) {
-        this.report = report || printLines;
+    constructor (report?: (lines: string) => void) {
+        this.report = report || printLine;
         this.tests = [];
         this.onlyTests = [];
         this.scheduled = false;
@@ -206,7 +203,7 @@ export class Harness {
         const ts = this.onlyTests.length > 0 ?
             this.onlyTests : this.tests
 
-        this.report(['TAP version 13'])
+        this.report('TAP version 13')
 
         let total = 0
         let success = 0
@@ -215,28 +212,28 @@ export class Harness {
         for (const test of ts) {
             // TODO: parallel execution
             const result = await test.run()
-            // TODO: Stream output of test lines.
-            this.report(result.lines)
 
             total += result.fail + result.pass
             success += result.pass
             fail += result.fail
         }
 
-        this.report([
-            `\n1..${total}`,
-            `# tests ${total}`,
-            `# pass  ${success}`,
-            fail > 0 ? `# fail  ${fail}` : '\n# ok'
-        ])
+        this.report('')
+        this.report('1..' + total)
+        this.report('# tests ' + total)
+        this.report('# pass  ' + success)
+        if (fail) {
+            this.report('# fail  ' + fail)
+        } else {
+            this.report('')
+            this.report('# ok')
+        }
         // TODO: exitCode
     }
 }
 
-function printLines(lines: string[]) {
-    for (const line of lines) {
-        console.log(line)
-    }
+function printLine(line: string) {
+    console.log(line)
 }
 
 const GLOBAL_HARNESS = new Harness();
