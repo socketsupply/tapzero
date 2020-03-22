@@ -2,15 +2,21 @@
 
 import * as path from 'path'
 
+const NUMBER_LINE = /^1\.\.\d+$/
+const FAIL_LINE = /^# fail  \d+$/
+
 export function collect (fn: (a: string) => void) {
     const total: string[] = []
+    let almostFinished = false
 
-    return function report(lines: string[]) {
-        for (const line of lines) {
-            const moreLines = line.split('\n')
-            total.push(...moreLines)
-        }
-        if (lines[0] && lines[0].startsWith('\n1..')) {
+    return function report(line: string) {
+        total.push(line)
+        if (line && NUMBER_LINE.test(line)) {
+            almostFinished = true
+        } else if (almostFinished && (
+            line === '# ok' ||
+            FAIL_LINE.test(line)
+        )){
             fn(strip(total.join('\n')))
         }
     }
