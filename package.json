@@ -14,6 +14,11 @@
     "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n;' fast-deep-equal.js",
     "view-cover": "npr opn ./coverage/index.html"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run build && git add build && git commit -m 'build js'"
+    }
+  },
   "dependencies": {},
   "binDependencies": {
     "nyc": "13.3.0",
@@ -26,6 +31,7 @@
     "@pre-bundled/tape": "4.11.0",
     "@types/node": "13.7.4",
     "diff": "4.0.2",
+    "husky": "^4.2.3",
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.4.2"
   },
