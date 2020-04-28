@@ -4,21 +4,16 @@
   "description": "Smallest test library",
   "main": "build/src/index.js",
   "scripts": {
-    "test": "npm run build && npm run cover -s && npm run check-cover -s",
+    "test": "npm run build && node build/test/index.js",
     "build-only": "rm -r build && npr sucrase -p . && npm run cp-files -s",
     "build": "npr tsc -p . && npm run build-only",
     "build:watch": "npm run build-only && npr onchange '{src,test}/**/*.{ts,js,txt}' -- npm run build-only -s",
     "cp-files": "cp ./test/zora/fixtures/*.txt ./build/test/zora/fixtures",
-    "cover": "npr nyc -r text -r html -- node ./build/test",
-    "check-cover": "npr nyc check-coverage --branches=25 --lines=50 --functions=50",
-    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n;' fast-deep-equal.js",
-    "view-cover": "npr opn ./coverage/index.html"
+    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n;' fast-deep-equal.js"
   },
   "dependencies": {},
   "binDependencies": {
-    "nyc": "13.3.0",
     "onchange": "6.1.0",
-    "opn": "1.0.1",
     "sucrase-raynos": "3.12.1-dev1",
     "typescript": "3.7.2"
   },
