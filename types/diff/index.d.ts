@@ -12,6 +12,7 @@ export as namespace Diff;
 export interface BaseOptions {
     /**
      * `true` to ignore casing difference.
+     *
      * @default false
      */
     ignoreCase?: boolean;

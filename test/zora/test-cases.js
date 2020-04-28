@@ -54,7 +54,7 @@ function equalDiff(t, actual, expected) {
             const color = part.added ? green :
                 part.removed ? red : null;
 
-            const str = color ? color(part.value) : part.value
+            const str = color !== null ? color(part.value) : part.value
             process.stderr.write(str.replace(/\n/g, '    \n'));
         });
         process.stderr.write(gray('-------------------------\n'))

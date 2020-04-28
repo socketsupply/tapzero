@@ -27,7 +27,7 @@ function collect (fn) {
      */
     function report(line) {
         total.push(line)
-        if (line && NUMBER_LINE.test(line)) {
+        if (line !== '' && NUMBER_LINE.test(line)) {
             almostFinished = true
         } else if (almostFinished && (
             line === '# ok' ||

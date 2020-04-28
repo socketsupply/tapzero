@@ -206,11 +206,11 @@ class Test {
  * @param {Error} e
  */
 function findAtLineFromError(e) {
-    var err = (e.stack || '').split('\n');
+    var lines = (e.stack || '').split('\n');
     var dir = __dirname;
 
-    for (var i = 0; i < err.length; i++) {
-        var m = AT_REGEX.exec(err[i]);
+    for (const line of lines) {
+        var m = AT_REGEX.exec(line);
         if (!m) {
             continue;
         }
@@ -283,11 +283,11 @@ class Harness {
         }
 
         this.report('')
-        this.report('1..' + total)
-        this.report('# tests ' + total)
-        this.report('# pass  ' + success)
+        this.report(`1..${total}`)
+        this.report(`# tests ${total}`)
+        this.report(`# pass  ${success}`)
         if (fail) {
-            this.report('# fail  ' + fail)
+            this.report(`# fail  ${fail}`)
         } else {
             this.report('')
             this.report('# ok')
