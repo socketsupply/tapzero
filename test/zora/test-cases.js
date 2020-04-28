@@ -79,16 +79,8 @@ function exec(command, args) {
         let stderr = ''
         let combined = ''
 
-        proc.stdout.on('data', (buf) => {
-            const str = buf.toString()
-            stdout += str
-            combined += str
-        })
-        proc.stderr.on('data', (buf) => {
-            const str = buf.toString()
-            stderr += str
-            combined += str
-        })
+        proc.stdout.on('data', onStdout)
+        proc.stderr.on('data', onStderr)
         proc.on('error', (err) => {
             reject(err)
         })
@@ -98,6 +90,26 @@ function exec(command, args) {
                 exitCode, stdout, stderr, combined
             })
         })
+
+        /**
+         * @param {Buffer} buf
+         * @returns {void}
+         */
+        function onStdout (buf) {
+            const str = buf.toString()
+            stdout += str
+            combined += str
+        }
+
+        /**
+         * @param {Buffer} buf
+         * @returns {void}
+         */
+        function onStderr (buf) {
+            const str = buf.toString()
+            stderr += str
+            combined += str
+        }
     })
 }
 
