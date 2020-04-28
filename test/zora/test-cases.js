@@ -40,6 +40,7 @@ for (const file of JS_FILES) {
  * @param {test.Test} t
  * @param {string} actual
  * @param {string} expected
+ * @returns {void}
  */
 function equalDiff(t, actual, expected) {
     t.equal(actual, expected)
@@ -64,6 +65,12 @@ function equalDiff(t, actual, expected) {
 /**
  * @param {string} command
  * @param {string[]} args
+ * @returns {Promise<{
+ *   exitCode: number | null,
+ *   stdout: string,
+ *   stderr: string,
+ *   combined: string
+ * }>}
  */
 function exec(command, args) {
     return new Promise((resolve, reject) => {
@@ -96,6 +103,7 @@ function exec(command, args) {
 
 /**
  * @param {string} text
+ * @returns {string}
  */
 function green(text) {
     return '\u001b[32m' + text + '\u001b[0m'
@@ -103,6 +111,7 @@ function green(text) {
 
 /**
  * @param {string} text
+ * @returns {string}
  */
 function red(text) {
     return '\u001b[31m' + text + '\u001b[0m'
@@ -110,6 +119,7 @@ function red(text) {
 
 /**
  * @param {string} text
+ * @returns {string}
  */
 function gray(text) {
     return '\u001b[30;1m' + text + '\u001b[0m'

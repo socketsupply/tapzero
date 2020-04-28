@@ -13,6 +13,7 @@ exports.trimPrefix = trimPrefix
 
 /**
  * @param {(a: string) => void} fn
+ * @returns {(line: string) => void}
  */
 function collect (fn) {
     /** @type {string[]} */
@@ -24,6 +25,7 @@ function collect (fn) {
 
     /**
      * @param {string} line
+     * @returns {void}
      */
     function report(line) {
         total.push(line)
@@ -40,6 +42,7 @@ function collect (fn) {
 
 /**
  * @param {string} line
+ * @returns {string}
  */
 function strip (line) {
     var withoutTestDir = line.replace(
@@ -64,6 +67,7 @@ function strip (line) {
 
 /**
  * @param {TemplateStringsArray} text
+ * @returns {string}
  */
 function trimPrefix (text) {
     const lines = text[0].split('\n')

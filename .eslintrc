@@ -9,7 +9,7 @@
         "es6": true
     },
     "plugins": [
-        "@typescript-eslint", "jsdoc"
+        "@typescript-eslint", "jsdoc", "jsdoc-typescript"
     ],
     "extends": [
         "eslint:recommended",
@@ -114,13 +114,35 @@
         "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/unified-signatures": "error",
 
-
-
+        "jsdoc-typescript/require-class-field": "error",
 
         "jsdoc/check-alignment": "error",
-        "jsdoc/check-indentation": "error",
+        "jsdoc/check-indentation": "off",
         "jsdoc/newline-after-description": "error",
-        "jsdoc/no-types": "off"
+        "jsdoc/no-types": "off",
+        "jsdoc/require-jsdoc": [
+            "error",
+            {
+                "publicOnly": false,
+                "require": {
+                    "FunctionDeclaration": true,
+                    "FunctionExpression": true,
+                    "MethodDefinition": true,
+                    "ClassExpression": true,
+                    "ClassDeclaration": true
+                }
+            }
+        ],
+        "jsdoc/require-property": "error",
+        "jsdoc/require-property-type": "error",
+        "jsdoc/require-returns": [
+            "error",
+            {
+                "forceRequireReturn": true,
+                "forceReturnsWithAsync": true
+            }
+        ],
+        "jsdoc/require-returns-type": "error"
 
 
         // "@typescript-eslint/adjacent-overload-signatures": "error",

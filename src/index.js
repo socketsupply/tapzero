@@ -18,7 +18,22 @@ const AT_REGEX = new RegExp(
 /**
  * @typedef {(t: Test) => (void | Promise<void>)} TestFn
  */
+
+/**
+ * @class
+ */
 class Test {
+    /** @type {string} */
+    name;
+    /** @type {TestFn} */
+    fn;
+    /** @type {Harness} */
+    harness;
+    /** @type {{ pass: number, fail: number }} */
+    _result;
+    /** @type {boolean} */
+    done;
+
     /**
      * @constructor
      * @param {string} name
@@ -38,6 +53,7 @@ class Test {
 
     /**
      * @param {string} msg
+     * @returns {void}
      */
     comment(msg) {
         this.harness.report('# ' + msg)
@@ -48,6 +64,7 @@ class Test {
      * @param {T} actual
      * @param {T} expected
      * @param {string} [msg]
+     * @returns {void}
      */
     deepEqual(actual, expected, msg) {
         this._assert(
@@ -61,6 +78,7 @@ class Test {
      * @param {T} actual
      * @param {T} expected
      * @param {string} [msg]
+     * @returns {void}
      */
     notDeepEqual(actual, expected, msg) {
         this._assert(
@@ -74,6 +92,7 @@ class Test {
      * @param {T} actual
      * @param {T} expected
      * @param {string} [msg]
+     * @returns {void}
      */
     equal(actual, expected, msg) {
         this._assert(
@@ -86,6 +105,7 @@ class Test {
      * @param {unknown} actual
      * @param {unknown} expected
      * @param {string} [msg]
+     * @returns {void}
      */
     notEqual(actual, expected, msg) {
         this._assert(
@@ -96,6 +116,7 @@ class Test {
 
     /**
      * @param {string} [msg]
+     * @returns {void}
      */
     fail(msg) {
         this._assert(
@@ -107,6 +128,7 @@ class Test {
     /**
      * @param {unknown} actual
      * @param {string} [msg]
+     * @returns {void}
      */
     ok(actual, msg) {
         this._assert(
@@ -118,6 +140,7 @@ class Test {
     /**
      * @param {Error | null} err
      * @param {string} [msg]
+     * @returns {void}
      */
     ifError(err, msg) {
         this._assert(
@@ -131,6 +154,7 @@ class Test {
      * @param {unknown} expected
      * @param {string} description
      * @param {string} operator
+     * @returns {void}
      */
     _assert(
         pass, actual, expected,
@@ -191,6 +215,12 @@ class Test {
         report('  ...')
     }
 
+    /**
+     * @returns {Promise<{
+     *   pass: number,
+     *   fail: number
+     * }>}
+     */
     async run () {
         this.harness.report('# ' + this.name)
         const maybeP = this.fn(this);
@@ -204,6 +234,7 @@ class Test {
 
 /**
  * @param {Error} e
+ * @returns {string}
  */
 function findAtLineFromError(e) {
     var lines = (e.stack || '').split('\n');
@@ -224,7 +255,20 @@ function findAtLineFromError(e) {
     return ''
 }
 
+/**
+ * @class
+ */
 class Harness {
+    /** @type {(lines: string) => void} */
+    report;
+    /** @type {Test[]} */
+    tests;
+    /** @type {Test[]} */
+    onlyTests;
+    /** @type {boolean} */
+    scheduled;
+    /** @type {number} */
+    _id;
 
     /**
      * @constructor
@@ -233,14 +277,15 @@ class Harness {
     constructor (report) {
         this.report = report || printLine;
 
-        /** @type {Test[]} */
         this.tests = [];
-        /** @type {Test[]} */
         this.onlyTests = [];
         this.scheduled = false;
         this._id = 0;
     }
 
+    /**
+     * @returns {string}
+     */
     nextId () {
         return String(++this._id)
     }
@@ -249,6 +294,7 @@ class Harness {
      * @param {string} name
      * @param {TestFn} fn
      * @param {boolean} only
+     * @returns {void}
      */
     add (name, fn, only) {
         // TODO: calling add() after run()
@@ -263,6 +309,9 @@ class Harness {
         }
     }
 
+    /**
+     * @returns {Promise<void>}
+     */
     async run () {
         const ts = this.onlyTests.length > 0 ?
             this.onlyTests : this.tests
@@ -299,6 +348,7 @@ exports.Harness = Harness
 
 /**
  * @param {string} line
+ * @returns {void}
  */
 function printLine(line) {
     console.log(line)
@@ -309,6 +359,7 @@ const GLOBAL_HARNESS = new Harness();
 /**
  * @param {string} name
  * @param {TestFn} [fn]
+ * @returns {void}
  */
 function test(name, fn) {
     if (!fn) return
@@ -319,6 +370,7 @@ exports.test = test
 /**
  * @param {string} name
  * @param {TestFn} [fn]
+ * @returns {void}
  */
 function only(name, fn) {
     if (!fn) return
@@ -329,12 +381,14 @@ exports.only = only
 /**
  * @param {string} _name
  * @param {TestFn} [_fn]
+ * @returns {void}
  */
 function skip(_name, _fn) {}
 exports.skip = skip
 
 /**
  * @param {Error} err
+ * @returns {void}
  */
 function rethrowImmediate (err) {
     setTimeout(() => { throw err; }, 0)

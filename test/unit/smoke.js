@@ -15,6 +15,7 @@ test('zerotap outputs TAP', (assert) => {
 
     /**
      * @param {string} actual
+     * @returns {void}
      */
     function verify (actual) {
         assert.deepEqual(actual, trimPrefix`
@@ -43,6 +44,7 @@ test('zerotap with two blocks', (assert) => {
 
     /**
      * @param {string} actual
+     * @returns {void}
      */
     function verify (actual) {
         assert.deepEqual(actual, trimPrefix`
@@ -76,6 +78,7 @@ test('zerotap handles failures', (assert) => {
 
     /**
      * @param {string} actual
+     * @returns {void}
      */
     function verify(actual) {
         assert.equal(actual, trimPrefix`
@@ -117,6 +120,7 @@ test('zerotap handles errors', (assert) => {
 
     /**
      * @param {string} actual
+     * @returns {void}
      */
     function verify(actual) {
         assert.equal(actual, trimPrefix`
@@ -158,6 +162,7 @@ test('zerotap handles multiple asserts', (assert) => {
 
     /**
      * @param {string} actual
+     * @returns {void}
      */
     function verify(actual) {
         assert.equal(actual, trimPrefix`
@@ -207,6 +212,7 @@ test('zerotap with multiple blocks', (assert) => {
 
     /**
      * @param {string} actual
+     * @returns {void}
      */
     function verify(actual) {
         assert.equal(actual, trimPrefix`
@@ -242,6 +248,7 @@ test('zerotap other methods', (assert) => {
 
     /**
      * @param {string} actual
+     * @returns {void}
      */
     function verify (actual) {
         assert.equal(actual, trimPrefix`
@@ -274,6 +281,7 @@ test('zerotap fail', (assert) => {
 
     /**
      * @param {string} actual
+     * @returns {void}
      */
     function verify (actual) {
         assert.equal(actual, trimPrefix`
