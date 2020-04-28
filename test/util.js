@@ -5,7 +5,7 @@
 const path = require('path')
 
 const NUMBER_LINE = /^1\.\.\d+$/
-const FAIL_LINE = /^# fail  \d+$/
+const FAIL_LINE = /^# fail[ ]{2}\d+$/
 
 exports.collect = collect
 exports.strip = strip
@@ -57,7 +57,7 @@ function strip (line) {
         /:\d+/g, ':$LINE'
     );
     var withoutNestedLineNumbers = withoutLineNumbers.replace(
-        /, \<anonymous\>:\$LINE:\$COL\)$/, ')'
+        /, <anonymous>:\$LINE:\$COL\)$/, ')'
     );
     return withoutNestedLineNumbers;
 }
