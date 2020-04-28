@@ -1,4 +1,5 @@
 // Copied from fast-deep-equal@3.1.1.
+// @ts-nocheck
 'use strict';
 
 // do not edit .js files directly - edit src/index.jst
