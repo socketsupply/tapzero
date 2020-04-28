@@ -4,18 +4,12 @@
   "description": "Smallest test library",
   "main": "build/src/index.js",
   "scripts": {
-    "test": "npm run build && node build/test/index.js",
+    "test": "npm run check && node test/index.js",
     "check": "npr tsc -p .",
-    "build-only": "rm -r build && npr sucrase -p . && npm run cp-files -s",
-    "build": "npr tsc -p . && npm run build-only",
-    "build:watch": "npm run build-only && npr onchange '{src,test}/**/*.{ts,js,txt}' -- npm run build-only -s",
-    "cp-files": "cp ./test/zora/fixtures/*.txt ./build/test/zora/fixtures",
-    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n;' fast-deep-equal.js"
+    "vendor": "cp node_modules/fast-deep-equal/index.js ./src/fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' src/fast-deep-equal.js"
   },
   "dependencies": {},
   "binDependencies": {
-    "onchange": "6.1.0",
-    "sucrase-raynos": "3.12.1-dev1",
     "typescript": "3.7.2"
   },
   "devDependencies": {
