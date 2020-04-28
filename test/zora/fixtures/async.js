@@ -1,3 +1,4 @@
+// @ts-nocheck
 const test = require('../../../src/index').test
 
 const wait = time => new Promise(resolve => {
