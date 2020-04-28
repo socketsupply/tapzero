@@ -5,6 +5,7 @@
   "main": "build/src/index.js",
   "scripts": {
     "test": "npm run build && node build/test/index.js",
+    "check": "npr tsc -p .",
     "build-only": "rm -r build && npr sucrase -p . && npm run cp-files -s",
     "build": "npr tsc -p . && npm run build-only",
     "build:watch": "npm run build-only && npr onchange '{src,test}/**/*.{ts,js,txt}' -- npm run build-only -s",
