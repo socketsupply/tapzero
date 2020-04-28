@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "incremental": true,
     "outDir": "build",
     "target": "ES2017",
     "types": ["node"],
@@ -24,7 +23,7 @@
     "noStrictGenericChecks": false,
     "esModuleInterop": false,
     "isolatedModules": true,
-    "checkJs": false,
+    "checkJs": true,
     "strict": true,
     "baseUrl": "./",
     "paths": {
