@@ -14,7 +14,6 @@ test('zerotap outputs TAP', (assert) => {
     }, true)
 
     /**
-     *
      * @param {string} actual
      */
     function verify (actual) {
