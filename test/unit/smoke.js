@@ -1,9 +1,11 @@
 'use strict'
 
-import * as test from '@pre-bundled/tape'
+// @ts-check
 
-import { Harness } from '../../src/index'
-import { collect, trimPrefix } from '../util'
+const test = require('@pre-bundled/tape')
+
+const { Harness } = require('../../src/index.js')
+const { collect, trimPrefix } = require('../util.js')
 
 test('zerotap outputs TAP', (assert) => {
     const h = new Harness(collect(verify))
@@ -11,7 +13,11 @@ test('zerotap outputs TAP', (assert) => {
         t.ok(true)
     }, true)
 
-    function verify (actual: string) {
+    /**
+     *
+     * @param {string} actual
+     */
+    function verify (actual) {
         assert.deepEqual(actual, trimPrefix`
         TAP version 13
         # one
@@ -36,7 +42,10 @@ test('zerotap with two blocks', (assert) => {
         t.ok(true, 'this test passes')
     }, true)
 
-    function verify (actual: string) {
+    /**
+     * @param {string} actual
+     */
+    function verify (actual) {
         assert.deepEqual(actual, trimPrefix`
         TAP version 13
         # one
@@ -66,7 +75,10 @@ test('zerotap handles failures', (assert) => {
         t.equal('one', 'two', 'this test fails')
     }, true)
 
-    function verify(actual: string) {
+    /**
+     * @param {string} actual
+     */
+    function verify(actual) {
         assert.equal(actual, trimPrefix`
         TAP version 13
         # zero
@@ -104,7 +116,10 @@ test('zerotap handles errors', (assert) => {
         t.ifError(new Error('foo'))
     }, true)
 
-    function verify(actual: string) {
+    /**
+     * @param {string} actual
+     */
+    function verify(actual) {
         assert.equal(actual, trimPrefix`
         TAP version 13
         # zero
@@ -142,7 +157,10 @@ test('zerotap handles multiple asserts', (assert) => {
         t.ok(false, "some message")
     }, false)
 
-    function verify(actual: string) {
+    /**
+     * @param {string} actual
+     */
+    function verify(actual) {
         assert.equal(actual, trimPrefix`
         TAP version 13
         # test one
@@ -188,7 +206,10 @@ test('zerotap with multiple blocks', (assert) => {
         t.ok(true, 'message two')
     }, false)
 
-    function verify(actual: string) {
+    /**
+     * @param {string} actual
+     */
+    function verify(actual) {
         assert.equal(actual, trimPrefix`
         TAP version 13
         # test one
@@ -220,7 +241,10 @@ test('zerotap other methods', (assert) => {
         t.comment('a comment')
     }, false)
 
-    function verify (actual: string) {
+    /**
+     * @param {string} actual
+     */
+    function verify (actual) {
         assert.equal(actual, trimPrefix`
         TAP version 13
         # test one
@@ -249,7 +273,10 @@ test('zerotap fail', (assert) => {
         t.fail('my message')
     }, false)
 
-    function verify (actual: string) {
+    /**
+     * @param {string} actual
+     */
+    function verify (actual) {
         assert.equal(actual, trimPrefix`
         TAP version 13
         # test one

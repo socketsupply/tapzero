@@ -15,7 +15,16 @@ const AT_REGEX = new RegExp(
     '((?:\\/|[a-zA-Z]:\\\\)[^:\\)]+:(\\d+)(?::(\\d+))?)\\)$'
 )
 
+/**
+ * @typedef {(t: Test) => (void | Promise<void>)} TestFn
+ */
 class Test {
+    /**
+     * @constructor
+     * @param {string} name
+     * @param {TestFn} fn
+     * @param {Harness} h
+     */
     constructor (name, fn, h) {
         this.name = name;
         this.fn = fn;
@@ -27,51 +36,102 @@ class Test {
         this.done = false
     }
 
+    /**
+     * @param {string} msg
+     */
     comment(msg) {
         this.harness.report('# ' + msg)
     }
 
+    /**
+     * @template T
+     * @param {T} actual
+     * @param {T} expected
+     * @param {string} [msg]
+     */
     deepEqual(actual, expected, msg) {
         this._assert(
             deepEqual(actual, expected), actual, expected,
             msg || 'should be equivalent', 'deepEqual'
         )
     }
+
+    /**
+     * @template T
+     * @param {T} actual
+     * @param {T} expected
+     * @param {string} [msg]
+     */
     notDeepEqual(actual, expected, msg) {
         this._assert(
             !deepEqual(actual, expected), actual, expected,
             msg || 'should not be equivalent', 'notDeepEqual'
         )
     }
+
+    /**
+     * @template T
+     * @param {T} actual
+     * @param {T} expected
+     * @param {string} [msg]
+     */
     equal(actual, expected, msg) {
         this._assert(
             actual == expected, actual, expected,
             msg || 'should be equal', 'equal'
         )
     }
+
+    /**
+     * @param {unknown} actual
+     * @param {unknown} expected
+     * @param {string} [msg]
+     */
     notEqual(actual, expected, msg) {
         this._assert(
             actual != expected, actual, expected,
             msg || 'should not be equal', 'notEqual'
         )
     }
+
+    /**
+     * @param {string} [msg]
+     */
     fail(msg) {
         this._assert(
             false, 'fail called', 'fail not called',
             msg || 'fail called', 'fail'
         )
     }
+
+    /**
+     * @param {unknown} actual
+     * @param {string} [msg]
+     */
     ok(actual, msg) {
         this._assert(
             !!actual, actual, 'truthy value',
             msg || 'should be truthy', 'ok'
         )
     }
+
+    /**
+     * @param {Error | null} err
+     * @param {string} [msg]
+     */
     ifError(err, msg) {
         this._assert(
             !err, err, 'no error', msg || String(err), 'ifError'
         )
     }
+
+    /**
+     * @param {boolean} pass
+     * @param {unknown} actual
+     * @param {unknown} expected
+     * @param {string} description
+     * @param {string} operator
+     */
     _assert(
         pass, actual, expected,
         description, operator
@@ -96,7 +156,7 @@ class Test {
         const atErr = new Error(description)
         let err = atErr
         if (actual && OBJ_TO_STRING.call(actual) === '[object Error]') {
-            err = actual
+            err = /** @type {Error} */ (actual)
             actual = err.message
         }
 
@@ -142,6 +202,9 @@ class Test {
     }
 }
 
+/**
+ * @param {Error} e
+ */
 function findAtLineFromError(e) {
     var err = (e.stack || '').split('\n');
     var dir = __dirname;
@@ -161,10 +224,18 @@ function findAtLineFromError(e) {
     return ''
 }
 
-export class Harness {
+class Harness {
+
+    /**
+     * @constructor
+     * @param {(lines: string) => void} [report]
+     */
     constructor (report) {
         this.report = report || printLine;
+
+        /** @type {Test[]} */
         this.tests = [];
+        /** @type {Test[]} */
         this.onlyTests = [];
         this.scheduled = false;
         this._id = 0;
@@ -174,6 +245,11 @@ export class Harness {
         return String(++this._id)
     }
 
+    /**
+     * @param {string} name
+     * @param {TestFn} fn
+     * @param {boolean} only
+     */
     add (name, fn, only) {
         // TODO: calling add() after run()
         const t = new Test(name, fn, this);
@@ -219,25 +295,47 @@ export class Harness {
         // TODO: exitCode
     }
 }
+exports.Harness = Harness
 
+/**
+ * @param {string} line
+ */
 function printLine(line) {
     console.log(line)
 }
 
 const GLOBAL_HARNESS = new Harness();
 
-export function test(name, fn) {
+/**
+ * @param {string} name
+ * @param {TestFn} [fn]
+ */
+function test(name, fn) {
     if (!fn) return
     GLOBAL_HARNESS.add(name, fn, false);
 }
+exports.test = test
 
-export function only(name, fn) {
+/**
+ * @param {string} name
+ * @param {TestFn} [fn]
+ */
+function only(name, fn) {
     if (!fn) return
     GLOBAL_HARNESS.add(name, fn, true);
 }
+exports.only = only
 
-export function skip(_name, _fn) {}
+/**
+ * @param {string} _name
+ * @param {TestFn} [_fn]
+ */
+function skip(_name, _fn) {}
+exports.skip = skip
 
+/**
+ * @param {Error} err
+ */
 function rethrowImmediate (err) {
     setTimeout(() => { throw err; }, 0)
 }

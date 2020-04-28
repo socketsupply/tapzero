@@ -1,15 +1,31 @@
 'use strict'
 
-import * as path from 'path'
+// @ts-check
+
+const path = require('path')
 
 const NUMBER_LINE = /^1\.\.\d+$/
 const FAIL_LINE = /^# fail  \d+$/
 
-export function collect (fn: (a: string) => void) {
-    const total: string[] = []
+exports.collect = collect
+exports.strip = strip
+exports.trimPrefix = trimPrefix
+
+/**
+ * @param {(a: string) => void} fn
+ */
+function collect (fn) {
+    /** @type {string[]} */
+    const total = []
     let almostFinished = false
 
-    return function report(line: string) {
+
+    return report
+
+    /**
+     * @param {string} line
+     */
+    function report(line) {
         total.push(line)
         if (line && NUMBER_LINE.test(line)) {
             almostFinished = true
@@ -22,7 +38,10 @@ export function collect (fn: (a: string) => void) {
     }
 }
 
-export function strip (line: string) {
+/**
+ * @param {string} line
+ */
+function strip (line) {
     var withoutTestDir = line.replace(
         new RegExp(__dirname, 'g'), '$TEST'
     );
@@ -34,6 +53,8 @@ export function strip (line: string) {
     );
     var withoutLineNumbers = withoutPathSep.replace(
         /:\d+:\d+/g, ':$LINE:$COL'
+    ).replace(
+        /:\d+/g, ':$LINE'
     );
     var withoutNestedLineNumbers = withoutLineNumbers.replace(
         /, \<anonymous\>:\$LINE:\$COL\)$/, ')'
@@ -41,7 +62,10 @@ export function strip (line: string) {
     return withoutNestedLineNumbers;
 }
 
-export function trimPrefix (text: TemplateStringsArray) {
+/**
+ * @param {TemplateStringsArray} text
+ */
+function trimPrefix (text) {
     const lines = text[0].split('\n')
     let commonPrefix = Infinity
     for (const line of lines) {
