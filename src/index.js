@@ -2,6 +2,11 @@
 
 // @ts-check
 
+/**
+ * TODO: @Raynos ; change the jsdoc plugin about class fields
+ * TODO: @Raynos ; add support for callsites to type-coverage
+ */
+
 const deepEqual = require('./fast-deep-equal')
 
 const NEW_LINE_REGEX = /\n/g
@@ -23,17 +28,6 @@ const AT_REGEX = new RegExp(
  * @class
  */
 class Test {
-    /** @type {string} */
-    name;
-    /** @type {TestFn} */
-    fn;
-    /** @type {Harness} */
-    harness;
-    /** @type {{ pass: number, fail: number }} */
-    _result;
-    /** @type {boolean} */
-    done;
-
     /**
      * @constructor
      * @param {string} name
@@ -41,13 +35,18 @@ class Test {
      * @param {Harness} h
      */
     constructor (name, fn, h) {
+        /** @type {string} */
         this.name = name;
+        /** @type {TestFn} */
         this.fn = fn;
+        /** @type {Harness} */
         this.harness = h;
+        /** @type {{ pass: number, fail: number }} */
         this._result = {
             pass: 0,
             fail: 0
         }
+        /** @type {boolean} */
         this.done = false
     }
 
@@ -67,6 +66,7 @@ class Test {
      * @returns {void}
      */
     deepEqual(actual, expected, msg) {
+        // deepEqual('foo', 'bar')
         this._assert(
             deepEqual(actual, expected), actual, expected,
             msg || 'should be equivalent', 'deepEqual'
@@ -259,27 +259,21 @@ function findAtLineFromError(e) {
  * @class
  */
 class Harness {
-    /** @type {(lines: string) => void} */
-    report;
-    /** @type {Test[]} */
-    tests;
-    /** @type {Test[]} */
-    onlyTests;
-    /** @type {boolean} */
-    scheduled;
-    /** @type {number} */
-    _id;
-
     /**
      * @constructor
      * @param {(lines: string) => void} [report]
      */
     constructor (report) {
+        /** @type {(lines: string) => void} */
         this.report = report || printLine;
 
+        /** @type {Test[]} */
         this.tests = [];
+        /** @type {Test[]} */
         this.onlyTests = [];
+        /** @type {boolean} */
         this.scheduled = false;
+        /** @type {number} */
         this._id = 0;
     }
 

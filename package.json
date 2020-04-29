@@ -14,7 +14,7 @@
     "@typescript-eslint/parser": "2.30.0",
     "@typescript-eslint/eslint-plugin": "2.30.0",
     "eslint-plugin-jsdoc": "24.0.0",
-    "eslint-plugin-jsdoc-typescript": "Raynos/eslint-plugin-jsdoc-typescript#5dd64ddb04d7cbd3709b332ca507241bb4fa40d9",
+    "eslint-plugin-jsdoc-typescript": "Raynos/eslint-plugin-jsdoc-typescript#a0e9f8c305a4ac310fef512a7ae15b7f69c6bc0b",
     "eslint": "Raynos/eslint#relative-to-parser",
     "typescript": "3.7.2"
   },
@@ -23,7 +23,9 @@
     "@types/node": "13.7.4",
     "diff": "4.0.2",
     "fast-deep-equal": "3.1.1",
-    "npm-bin-deps": "1.4.2"
+    "npm-bin-deps": "1.4.2",
+    "type-coverage": "2.4.2",
+    "typescript": "3.8.3"
   },
   "files": [
     "src"
