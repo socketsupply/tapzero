@@ -2,13 +2,11 @@ TAP version 13
 # will not go to the end
 ok 1 okay
 $TAPE/src/index.js:$LINE
-    setTimeout(() => { throw err; }, 0)
-                       ^
+    function rethrow () { throw err; }
+                          ^
 
 Error: Oh no!
-    at Test.fn ($TEST/zora/fixtures/bailout_fail.js:$LINE:$COL)
+    at Test._ [as fn] ($TEST/zora/fixtures/bailout_fail.js:$LINE:$COL)
     at Test.run ($TAPE/src/index.js:$LINE:$COL)
     at Harness.run ($TAPE/src/index.js:$LINE:$COL)
-    at Timeout._onTimeout ($TAPE/src/index.js:$LINE:$COL)
-    at listOnTimeout (internal/timers.js:$LINE:$COL)
-    at processTimers (internal/timers.js:$LINE:$COL)
+    at run ($TAPE/src/index.js:$LINE:$COL)

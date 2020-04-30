@@ -72,7 +72,7 @@ test('zerotap handles failures', (assert) => {
     h.add('passing', (t) => {
         t.ok(true, 'this test passes')
     }, true)
-    h.add('two', (t) => {
+    h.add('two', function _(t) {
         t.equal('one', 'two', 'this test fails')
     }, true)
 
@@ -93,12 +93,12 @@ test('zerotap handles failures', (assert) => {
             operator: equal
             expected: "two"
             actual:   "one"
-            at:       Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+            at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: this test fails
                   at Test._assert ($TAPE/src/index.js:$LINE:$COL)
                   at Test.equal ($TAPE/src/index.js:$LINE:$COL)
-                  at Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+                  at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/src/index.js:$LINE:$COL)
                   at Harness.run ($TAPE/src/index.js:$LINE:$COL)
           ...
@@ -114,7 +114,7 @@ test('zerotap handles failures', (assert) => {
 
 test('zerotap handles errors', (assert) => {
     const h = new Harness(collect(verify))
-    h.add('zero', (t) => {
+    h.add('zero', function _(t) {
         t.ifError(new Error('foo'))
     }, true)
 
@@ -131,15 +131,13 @@ test('zerotap handles errors', (assert) => {
             operator: ifError
             expected: "no error"
             actual:   "foo"
-            at:       Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+            at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: foo
-                  at Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+                  at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/src/index.js:$LINE:$COL)
                   at Harness.run ($TAPE/src/index.js:$LINE:$COL)
-                  at Timeout._onTimeout ($TAPE/src/index.js:$LINE:$COL)
-                  at listOnTimeout (internal/timers.js:$LINE:$COL)
-                  at processTimers (internal/timers.js:$LINE:$COL)
+                  at run ($TAPE/src/index.js:$LINE:$COL)
           ...
 
         1..1
@@ -154,7 +152,7 @@ test('zerotap handles errors', (assert) => {
 test('zerotap handles multiple asserts', (assert) => {
     const h = new Harness(collect(verify))
 
-    h.add('test one', (t) => {
+    h.add('test one', function _(t) {
         t.ok(true)
         t.ok(true, "message")
         t.ok(false, "some message")
@@ -175,17 +173,15 @@ test('zerotap handles multiple asserts', (assert) => {
             operator: ok
             expected: "truthy value"
             actual:   false
-            at:       Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+            at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: some message
                   at Test._assert ($TAPE/src/index.js:$LINE:$COL)
                   at Test.ok ($TAPE/src/index.js:$LINE:$COL)
-                  at Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+                  at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/src/index.js:$LINE:$COL)
                   at Harness.run ($TAPE/src/index.js:$LINE:$COL)
-                  at Timeout._onTimeout ($TAPE/src/index.js:$LINE:$COL)
-                  at listOnTimeout (internal/timers.js:$LINE:$COL)
-                  at processTimers (internal/timers.js:$LINE:$COL)
+                  at run ($TAPE/src/index.js:$LINE:$COL)
           ...
 
         1..3
@@ -275,7 +271,7 @@ test('zerotap other methods', (assert) => {
 test('zerotap fail', (assert) => {
     const h = new Harness(collect(verify))
 
-    h.add('test one', (t) => {
+    h.add('test one', function _(t) {
         t.fail('my message')
     }, false)
 
@@ -292,17 +288,15 @@ test('zerotap fail', (assert) => {
             operator: fail
             expected: "fail not called"
             actual:   "fail called"
-            at:       Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+            at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: my message
                   at Test._assert ($TAPE/src/index.js:$LINE:$COL)
                   at Test.fail ($TAPE/src/index.js:$LINE:$COL)
-                  at Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+                  at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/src/index.js:$LINE:$COL)
                   at Harness.run ($TAPE/src/index.js:$LINE:$COL)
-                  at Timeout._onTimeout ($TAPE/src/index.js:$LINE:$COL)
-                  at listOnTimeout (internal/timers.js:$LINE:$COL)
-                  at processTimers (internal/timers.js:$LINE:$COL)
+                  at run ($TAPE/src/index.js:$LINE:$COL)
           ...
 
         1..1

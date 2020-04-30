@@ -62,7 +62,16 @@ function strip (line) {
     var withoutNestedLineNumbers = withoutLineNumbers.replace(
         /, <anonymous>:\$LINE:\$COL\)$/, ')'
     );
-    return withoutNestedLineNumbers;
+
+    const lines = withoutNestedLineNumbers.split('\n')
+    const newLines = lines.filter((line) => {
+        return !line.includes('internal/process/task_queues.js') &&
+            !line.includes('internal/process/next_tick.js') &&
+            !line.includes('internal/modules/cjs/loader.js') &&
+            !line.includes('internal/bootstrap/node.js')
+    })
+
+    return newLines.join('\n')
 }
 
 /**
@@ -80,6 +89,7 @@ function trimPrefix (text) {
         }
     }
 
+    /** @type {string[]} */
     let result = []
     for (const line of lines) {
         result.push(line.slice(commonPrefix))

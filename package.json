@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "npr eslint --resolve-plugins-relative-to $(npr which eslint) .",
-    "test": "npm run check && node test/index.js",
+    "test": "npm run check && node test/index.js && npm run type-coverage",
+    "type-coverage": "npr type-coverage --strict --detail --ignore-files src/fast-deep-equal.js --ignore-files \"test/zora/fixtures/*.js\" --at-least 100",
     "check": "npr tsc -p .",
     "vendor": "cp node_modules/fast-deep-equal/index.js ./src/fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' src/fast-deep-equal.js"
   },
@@ -16,6 +17,7 @@
     "eslint-plugin-jsdoc": "24.0.0",
     "eslint-plugin-jsdoc-typescript": "Raynos/eslint-plugin-jsdoc-typescript#a0e9f8c305a4ac310fef512a7ae15b7f69c6bc0b",
     "eslint": "Raynos/eslint#relative-to-parser",
+    "type-coverage": "2.4.2",
     "typescript": "3.7.2"
   },
   "devDependencies": {
@@ -23,9 +25,7 @@
     "@types/node": "13.7.4",
     "diff": "4.0.2",
     "fast-deep-equal": "3.1.1",
-    "npm-bin-deps": "1.4.2",
-    "type-coverage": "2.4.2",
-    "typescript": "3.8.3"
+    "npm-bin-deps": "1.4.2"
   },
   "files": [
     "src"

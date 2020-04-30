@@ -1,6 +1,6 @@
 const test = require('../../../src/index').test
 
-test('will not go to the end', t => {
+test('will not go to the end', function _(t) {
     t.ok(true, 'okay');
 
     throw new Error('Oh no!');

@@ -292,14 +292,17 @@ class Harness {
      */
     add (name, fn, only) {
         // TODO: calling add() after run()
+        const self = this
         const t = new Test(name, fn, this);
         const arr = only ? this.onlyTests : this.tests;
         arr.push(t);
         if (!this.scheduled) {
             this.scheduled = true;
-            setTimeout(() => {
-                this.run().then(null, rethrowImmediate);
-            }, 0);
+            process.nextTick(run);
+        }
+
+        function run () {
+            self.run().then(null, rethrowImmediate);
         }
     }
 
@@ -385,5 +388,7 @@ exports.skip = skip
  * @returns {void}
  */
 function rethrowImmediate (err) {
-    setTimeout(() => { throw err; }, 0)
+    process.nextTick(rethrow)
+
+    function rethrow () { throw err; }
 }
