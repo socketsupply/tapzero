@@ -15,7 +15,7 @@
     "@typescript-eslint/parser": "2.30.0",
     "@typescript-eslint/eslint-plugin": "2.30.0",
     "eslint-plugin-jsdoc": "24.0.0",
-    "eslint-plugin-jsdoc-typescript": "Raynos/eslint-plugin-jsdoc-typescript#a0e9f8c305a4ac310fef512a7ae15b7f69c6bc0b",
+    "eslint-plugin-jsdoc-typescript": "1.1.1",
     "eslint": "Raynos/eslint#relative-to-parser",
     "type-coverage": "2.4.2",
     "typescript": "3.7.2"
