@@ -4,7 +4,7 @@
   "description": "Smallest test library",
   "main": "index.js",
   "scripts": {
-    "lint": "npr eslint --resolve-plugins-relative-to $(npr which eslint) .",
+    "lint": "npr tsdocstandard",
     "test": "npm run check && node test/index.js && npm run type-coverage",
     "type-coverage": "npr type-coverage --strict --detail --ignore-files fast-deep-equal.js --ignore-files \"test/zora/fixtures/*.js\" --at-least 100",
     "check": "npr tsc -p .",
@@ -12,11 +12,7 @@
   },
   "dependencies": {},
   "binDependencies": {
-    "@typescript-eslint/parser": "2.30.0",
-    "@typescript-eslint/eslint-plugin": "2.30.0",
-    "eslint-plugin-jsdoc": "24.0.0",
-    "eslint-plugin-jsdoc-typescript": "1.1.1",
-    "eslint": "Raynos/eslint#v6.8.0-relative-to-parser",
+    "tsdocstandard": "15.0.1",
     "type-coverage": "2.4.2",
     "typescript": "3.7.2"
   },
@@ -27,8 +23,15 @@
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.4.2"
   },
+  "tsdocstandard": {
+    "ignore": [
+      "fast-deep-equal.js",
+      "test/zora/fixtures"
+    ]
+  },
   "files": [
-    "index.js", "fast-deep-equal.js"
+    "index.js",
+    "fast-deep-equal.js"
   ],
   "author": "Raynos <raynos2@gmail.com>",
   "repository": "git://github.com/Raynos/tapzero.git",
