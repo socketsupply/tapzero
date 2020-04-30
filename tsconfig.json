@@ -1,35 +1,25 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
     "types": ["node"],
-    "lib": ["es2017"],
+    "lib": ["es2018"],
     "noEmit": true,
     "module": "commonjs",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": true,
-    "alwaysStrict": true,
-    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noStrictGenericChecks": false,
     "strict": true,
     "baseUrl": "./",
     "paths": {
       "@pre-bundled/tape": ["./types/pre-bundled__tape"],
       "*" : ["./types/*"]
-    },
-    "strictNullChecks": true,
-    "strictFunctionTypes": true
+    }
   },
   "include": [
     "types/**/*.d.ts",
-    "src/*.js",
+    "*.js",
     "test/**/*.js"
   ]
 }

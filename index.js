@@ -238,7 +238,7 @@ class Test {
  */
 function findAtLineFromError(e) {
     var lines = (e.stack || '').split('\n');
-    var dir = __dirname;
+    var dir = __filename;
 
     for (const line of lines) {
         var m = AT_REGEX.exec(line);

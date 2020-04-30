@@ -2,13 +2,13 @@
   "name": "tapzero",
   "version": "0.1.3",
   "description": "Smallest test library",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "lint": "npr eslint --resolve-plugins-relative-to $(npr which eslint) .",
     "test": "npm run check && node test/index.js && npm run type-coverage",
-    "type-coverage": "npr type-coverage --strict --detail --ignore-files src/fast-deep-equal.js --ignore-files \"test/zora/fixtures/*.js\" --at-least 100",
+    "type-coverage": "npr type-coverage --strict --detail --ignore-files fast-deep-equal.js --ignore-files \"test/zora/fixtures/*.js\" --at-least 100",
     "check": "npr tsc -p .",
-    "vendor": "cp node_modules/fast-deep-equal/index.js ./src/fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' src/fast-deep-equal.js"
+    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js"
   },
   "dependencies": {},
   "binDependencies": {
@@ -28,7 +28,7 @@
     "npm-bin-deps": "1.4.2"
   },
   "files": [
-    "src"
+    "index.js", "fast-deep-equal.js"
   ],
   "author": "Raynos <raynos2@gmail.com>",
   "repository": "git://github.com/Raynos/tapzero.git",

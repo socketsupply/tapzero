@@ -4,7 +4,7 @@
 
 const test = require('@pre-bundled/tape')
 
-const { Harness } = require('../../src/index.js')
+const { Harness } = require('../../index.js')
 const { collect, trimPrefix } = require('../util.js')
 
 test('zerotap outputs TAP', (assert) => {
@@ -96,11 +96,11 @@ test('zerotap handles failures', (assert) => {
             at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: this test fails
-                  at Test._assert ($TAPE/src/index.js:$LINE:$COL)
-                  at Test.equal ($TAPE/src/index.js:$LINE:$COL)
+                  at Test._assert ($TAPE/index.js:$LINE:$COL)
+                  at Test.equal ($TAPE/index.js:$LINE:$COL)
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/src/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/src/index.js:$LINE:$COL)
+                  at Test.run ($TAPE/index.js:$LINE:$COL)
+                  at Harness.run ($TAPE/index.js:$LINE:$COL)
           ...
 
         1..3
@@ -135,9 +135,9 @@ test('zerotap handles errors', (assert) => {
             stack:    |-
               Error: foo
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/src/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/src/index.js:$LINE:$COL)
-                  at run ($TAPE/src/index.js:$LINE:$COL)
+                  at Test.run ($TAPE/index.js:$LINE:$COL)
+                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at run ($TAPE/index.js:$LINE:$COL)
           ...
 
         1..1
@@ -176,12 +176,12 @@ test('zerotap handles multiple asserts', (assert) => {
             at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: some message
-                  at Test._assert ($TAPE/src/index.js:$LINE:$COL)
-                  at Test.ok ($TAPE/src/index.js:$LINE:$COL)
+                  at Test._assert ($TAPE/index.js:$LINE:$COL)
+                  at Test.ok ($TAPE/index.js:$LINE:$COL)
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/src/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/src/index.js:$LINE:$COL)
-                  at run ($TAPE/src/index.js:$LINE:$COL)
+                  at Test.run ($TAPE/index.js:$LINE:$COL)
+                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at run ($TAPE/index.js:$LINE:$COL)
           ...
 
         1..3
@@ -291,12 +291,12 @@ test('zerotap fail', (assert) => {
             at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: my message
-                  at Test._assert ($TAPE/src/index.js:$LINE:$COL)
-                  at Test.fail ($TAPE/src/index.js:$LINE:$COL)
+                  at Test._assert ($TAPE/index.js:$LINE:$COL)
+                  at Test.fail ($TAPE/index.js:$LINE:$COL)
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/src/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/src/index.js:$LINE:$COL)
-                  at run ($TAPE/src/index.js:$LINE:$COL)
+                  at Test.run ($TAPE/index.js:$LINE:$COL)
+                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at run ($TAPE/index.js:$LINE:$COL)
           ...
 
         1..1
