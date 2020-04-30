@@ -2,8 +2,8 @@ TAP version 13
 # will not go to the end
 ok 1 okay
 $TAPE/index.js:$LINE
-    function rethrow () { throw err; }
-                          ^
+  function rethrow () { throw err }
+                        ^
 
 Error: Oh no!
     at Test._ [as fn] ($TEST/zora/fixtures/bailout_fail.js:$LINE:$COL)
