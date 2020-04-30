@@ -19,20 +19,20 @@ const JS_FILES = files.filter(f => f.endsWith('.js'))
 
 for (const file of JS_FILES) {
     const fileName = path.join(dir, file)
-    test(`test zora/case: ${file}`, async (t) => {
-        const info = await exec('node', [fileName])
+    test(`test zora/case: ${file}`, (t) => {
+        (async () => {
+            const info = await exec('node', [fileName])
 
-        const shouldErr = file.endsWith('_fail.js')
-        t.equal(info.exitCode, shouldErr ? 1 : 0)
+            const shouldErr = file.endsWith('_fail.js')
+            t.equal(info.exitCode, shouldErr ? 1 : 0)
 
-        const stripped = strip(info.combined)
+            const stripped = strip(info.combined)
 
-        const expected = await readFile(
-            fileName.replace('.js', '_out.txt'), 'utf8'
-        )
-        equalDiff(t, stripped, expected)
-
-        t.end()
+            const expected = await readFile(
+                fileName.replace('.js', '_out.txt'), 'utf8'
+            )
+            equalDiff(t, stripped, expected)
+        })().then(t.end, t.end)
     })
 }
 

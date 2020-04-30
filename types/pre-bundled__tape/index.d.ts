@@ -13,9 +13,7 @@ declare function tape(name: string, opts: tape.TestOptions, cb: tape.TestCase): 
 declare function tape(cb: tape.TestCase): void;
 
 declare namespace tape {
-    interface TestCase {
-        (test: Test): void;
-    }
+    type TestCase = (test: Test) => void;
 
     /**
      * Available opts options for the tape function.

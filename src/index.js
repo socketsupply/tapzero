@@ -301,6 +301,9 @@ class Harness {
             process.nextTick(run);
         }
 
+        /**
+         * @returns {void}
+         */
         function run () {
             self.run().then(null, rethrowImmediate);
         }
@@ -390,5 +393,8 @@ exports.skip = skip
 function rethrowImmediate (err) {
     process.nextTick(rethrow)
 
+    /**
+     * @returns {void}
+     */
     function rethrow () { throw err; }
 }
