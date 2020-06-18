@@ -21,7 +21,8 @@
     "@types/node": "13.7.4",
     "diff": "4.0.2",
     "fast-deep-equal": "3.1.1",
-    "npm-bin-deps": "1.4.2"
+    "npm-bin-deps": "1.4.2",
+    "tiny-benchy": "1.0.1"
   },
   "tsdocstandard": {
     "ignore": [
