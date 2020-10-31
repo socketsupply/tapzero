@@ -22,7 +22,7 @@
   },
   "dependencies": {},
   "binDependencies": {
-    "tsdocstandard": "github:Raynos/tsdocstandard#standard16",
+    "tsdocstandard": "16.0.0",
     "type-coverage": "2.14.2",
     "typescript": "4.0.5"
   },
