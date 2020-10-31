@@ -23,7 +23,7 @@
   "dependencies": {},
   "binDependencies": {
     "tsdocstandard": "15.7.1",
-    "type-coverage": "2.14.1",
+    "type-coverage": "2.14.2",
     "typescript": "4.0.5"
   },
   "devDependencies": {
