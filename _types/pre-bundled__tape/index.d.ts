@@ -19,8 +19,10 @@ declare namespace tape {
      * Available opts options for the tape function.
      */
     interface TestOptions {
-        skip?: boolean;		// See tape.skip.
-        timeout?: number;	// Set a timeout for the test, after which it will fail. See tape.timeoutAfter.
+        // See tape.skip.
+        skip?: boolean;
+        // Set a timeout for the test, after which it will fail. See tape.timeoutAfter.
+        timeout?: number;
     }
 
     /**

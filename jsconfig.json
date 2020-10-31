@@ -1,0 +1,16 @@
+{
+  "extends": "./_types/base-tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@pre-bundled/tape": ["./_types/pre-bundled__tape"],
+      "@pre-bundled/rimraf": ["./_types/pre-bundled__rimraf"],
+      "*" : ["./_types/*"]
+    }
+  },
+  "include": [
+    "_types/**/*.d.ts",
+    "*.js",
+    "test/**/*.js"
+  ]
+}

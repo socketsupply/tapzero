@@ -44,21 +44,21 @@ function collect (fn) {
  * @returns {string}
  */
 function strip (line) {
-  var withoutTestDir = line.replace(
+  const withoutTestDir = line.replace(
     new RegExp(__dirname, 'g'), '$TEST'
   )
-  var withoutPackageDir = withoutTestDir.replace(
+  const withoutPackageDir = withoutTestDir.replace(
     new RegExp(path.dirname(__dirname), 'g'), '$TAPE'
   )
-  var withoutPathSep = withoutPackageDir.replace(
+  const withoutPathSep = withoutPackageDir.replace(
     new RegExp('\\' + path.sep, 'g'), '/'
   )
-  var withoutLineNumbers = withoutPathSep.replace(
+  const withoutLineNumbers = withoutPathSep.replace(
     /:\d+:\d+/g, ':$LINE:$COL'
   ).replace(
     /:\d+/g, ':$LINE'
   )
-  var withoutNestedLineNumbers = withoutLineNumbers.replace(
+  const withoutNestedLineNumbers = withoutLineNumbers.replace(
     /, <anonymous>:\$LINE:\$COL\)$/, ')'
   )
 

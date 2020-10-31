@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "types": ["node"],
+    "target": "es2018",
     "lib": ["es2018"],
     "noEmit": true,
     "module": "commonjs",
@@ -11,15 +12,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
-    "baseUrl": "./",
-    "paths": {
-      "@pre-bundled/tape": ["./types/pre-bundled__tape"],
-      "*" : ["./types/*"]
-    }
-  },
-  "include": [
-    "types/**/*.d.ts",
-    "*.js",
-    "test/**/*.js"
-  ]
+    "maxNodeModuleJsDepth": 0
+  }
 }

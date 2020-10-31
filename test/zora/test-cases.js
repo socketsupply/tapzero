@@ -47,7 +47,7 @@ function equalDiff (t, actual, expected) {
   if (actual !== expected) {
     console.log('\n\n--------------diff:--------------\n')
 
-    var diff = jsdiff.diffChars(actual, expected)
+    const diff = jsdiff.diffChars(actual, expected)
     process.stderr.write(gray('-------------------------\n'))
     diff.forEach(function (part) {
       // green for additions, red for deletions

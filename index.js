@@ -239,11 +239,11 @@ class Test {
  * @returns {string}
  */
 function findAtLineFromError (e) {
-  var lines = (e.stack || '').split('\n')
-  var dir = __filename
+  const lines = (e.stack || '').split('\n')
+  const dir = __filename
 
   for (const line of lines) {
-    var m = AT_REGEX.exec(line)
+    const m = AT_REGEX.exec(line)
     if (!m) {
       continue
     }

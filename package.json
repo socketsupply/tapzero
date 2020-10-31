@@ -4,15 +4,15 @@
   "description": "Smallest test library",
   "main": "index.js",
   "scripts": {
+    "tsc": "npr tsc -p jsconfig.json --maxNodeModuleJsDepth 0",
     "lint": "npr tsdocstandard",
-    "test": "npm run check && node test/index.js && npm run type-coverage",
-    "type-coverage": "npr type-coverage --strict --detail --ignore-files fast-deep-equal.js --ignore-files \"test/zora/fixtures/*.js\" --at-least 100",
-    "check": "npr tsc -p .",
+    "test": "npm run tsc && npm run lint && node test/index.js && npm run type-coverage",
+    "type-coverage": "npr type-coverage -p jsconfig.json --strict --ignore-files fast-deep-equal.js --ignore-files \"test/zora/fixtures/*.js\" --at-least 100",
     "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js"
   },
   "dependencies": {},
   "binDependencies": {
-    "tsdocstandard": "15.0.1",
+    "tsdocstandard": "15.7.1",
     "type-coverage": "2.4.2",
     "typescript": "3.7.2"
   },
@@ -21,12 +21,13 @@
     "@types/node": "13.7.4",
     "diff": "4.0.2",
     "fast-deep-equal": "3.1.1",
-    "npm-bin-deps": "1.4.2",
+    "npm-bin-deps": "1.10.1",
     "tiny-benchy": "1.0.1"
   },
   "tsdocstandard": {
     "ignore": [
       "fast-deep-equal.js",
+      "benchmarks_micro",
       "test/zora/fixtures"
     ]
   },
