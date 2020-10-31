@@ -6,8 +6,7 @@
   "scripts": {
     "tsc": "npr tsc -p jsconfig.json --maxNodeModuleJsDepth 0",
     "lint": "npr tsdocstandard",
-    "test": "npm run tsc && npm run lint && node test/index.js && npm run type-coverage",
-    "type-coverage": "npr type-coverage",
+    "test": "npm run tsc && npm run lint && node test/index.js && npr type-coverage",
     "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js"
   },
   "typeCoverage": {
