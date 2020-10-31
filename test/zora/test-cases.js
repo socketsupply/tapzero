@@ -52,8 +52,9 @@ function equalDiff (t, actual, expected) {
     diff.forEach(function (part) {
       // green for additions, red for deletions
       // grey for common parts
-      const color = part.added ? green
-        : part.removed ? red : null
+      let color = null
+      if (part.added) color = green
+      if (part.removed) color = red
 
       const str = color !== null ? color(part.value) : part.value
       process.stderr.write(str.replace(/\n/g, '    \n'))

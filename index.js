@@ -316,7 +316,8 @@ class Harness {
    */
   async run () {
     const ts = this.onlyTests.length > 0
-      ? this.onlyTests : this.tests
+      ? this.onlyTests
+      : this.tests
 
     this.report('TAP version 13')
 
