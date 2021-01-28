@@ -20,6 +20,9 @@ const AT_REGEX = new RegExp(
     '((?:\\/|[a-zA-Z]:\\\\)[^:\\)]+:(\\d+)(?::(\\d+))?)\\)$'
 )
 
+/** @type {string} */
+let CACHED_FILE
+
 /**
  * @typedef {(t: Test) => (void | Promise<void>)} TestFn
  */
@@ -235,12 +238,42 @@ class Test {
 }
 
 /**
+ * @returns {string}
+ */
+function getTapZeroFileName () {
+  if (CACHED_FILE) return CACHED_FILE
+
+  const e = new Error('temp')
+  const lines = (e.stack || '').split('\n')
+
+  for (const line of lines) {
+    const m = AT_REGEX.exec(line)
+    if (!m) {
+      continue
+    }
+
+    let fileName = m[2]
+    if (m[4] && fileName.endsWith(`:${m[4]}`)) {
+      fileName = fileName.slice(0, fileName.length - m[4].length - 1)
+    }
+    if (m[3] && fileName.endsWith(`:${m[3]}`)) {
+      fileName = fileName.slice(0, fileName.length - m[3].length - 1)
+    }
+
+    CACHED_FILE = fileName
+    break
+  }
+
+  return CACHED_FILE || ''
+}
+
+/**
  * @param {Error} e
  * @returns {string}
  */
 function findAtLineFromError (e) {
   const lines = (e.stack || '').split('\n')
-  const dir = __filename
+  const dir = getTapZeroFileName()
 
   for (const line of lines) {
     const m = AT_REGEX.exec(line)
