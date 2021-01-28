@@ -300,7 +300,7 @@ class Harness {
     arr.push(t)
     if (!this.scheduled) {
       this.scheduled = true
-      process.nextTick(run)
+      setTimeout(run, 0)
     }
 
     /**
@@ -394,7 +394,7 @@ exports.skip = skip
  * @returns {void}
  */
 function rethrowImmediate (err) {
-  process.nextTick(rethrow)
+  setTimeout(rethrow, 0)
 
   /**
    * @returns {void}
