@@ -190,8 +190,8 @@ class Test {
     report('  ---')
     report(`    operator: ${operator}`)
 
-    let ex = JSON.stringify(expected, null, '  ')
-    let ac = JSON.stringify(actual, null, '  ')
+    let ex = JSON.stringify(expected, null, '  ') || 'undefined'
+    let ac = JSON.stringify(actual, null, '  ') || 'undefined'
     if (Math.max(ex.length, ac.length) > 65) {
       ex = ex.replace(NEW_LINE_REGEX, '\n      ')
       ac = ac.replace(NEW_LINE_REGEX, '\n      ')

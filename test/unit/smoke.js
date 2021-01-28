@@ -268,6 +268,46 @@ test('zerotap other methods', (assert) => {
   }
 })
 
+test('zerotap undefined is string', (assert) => {
+  const h = new Harness(collect(verify))
+
+  h.add('test one', (t) => {
+    t.equal(undefined, 'foo')
+  }, false)
+
+  /**
+   * @param {string} actual
+   * @returns {void}
+   */
+  function verify (actual) {
+    assert.equal(actual, trimPrefix`
+        TAP version 13
+        # test one
+        not ok 1 should be equal
+          ---
+            operator: equal
+            expected: "foo"
+            actual:   undefined
+            at:       Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+            stack:    |-
+              Error: should be equal
+                  at Test._assert ($TAPE/index.js:$LINE:$COL)
+                  at Test.equal ($TAPE/index.js:$LINE:$COL)
+                  at Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
+                  at Test.run ($TAPE/index.js:$LINE:$COL)
+                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at run ($TAPE/index.js:$LINE:$COL)
+          ...
+
+        1..1
+        # tests 1
+        # pass  0
+        # fail  1
+        `)
+    assert.end()
+  }
+})
+
 test('zerotap fail', (assert) => {
   const h = new Harness(collect(verify))
 
