@@ -2,6 +2,53 @@
 
 Zero dependency test framework
 
+## Migrating from tape
+
+```js
+const test = require('tape')
+// Tapzero exports an object with a test function property.
+const test = require('tapzero').test
+```
+
+```js
+tape('my test', (t) => {
+  t.equal(2, 2, 'ok')
+  t.end()
+})
+// Auto ending behavior on function completion
+tapzero('my test', (t) => {
+  t.equal(2, 2, 'ok')
+  // t.end() does not exist.
+})
+```
+
+```js
+// tapzero "auto" ends async tests when the async function completes
+tapzero('my cb test', async (t) => {
+  await new Promise((resolve) => {
+    t.equal(2, 2, 'ok')
+    setTimeout(() => {
+      // instead of calling t.end(), resolve a promise
+      resolve()
+    }, 10)
+  })
+})
+```
+
+```js
+tape('my test', (t) => {
+  t.equals(2, 2)
+  t.is(2, 2)
+  t.isEqual(2, 2)
+})
+tapzero('my test', (t) => {
+  // tapzero does not implement any aliases, very small surface area.
+  t.equal(2, 2)
+  t.equal(2, 2)
+  t.equal(2, 2)
+})
+```
+
 ## Motivation
 
 Small library, zero dependencies
