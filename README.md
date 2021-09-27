@@ -2,6 +2,10 @@
 
 Zero dependency test framework
 
+## Source code
+
+The implementation is <500 loc ( https://github.com/Raynos/tapzero/blob/master/index.js ) and very readable.
+
 ## Migrating from tape
 
 ```js
