@@ -4,11 +4,11 @@
 
 const test = require('@pre-bundled/tape')
 
-const { Harness } = require('../../index.js')
+const { TestRunner } = require('../../index.js')
 const { collect, trimPrefix } = require('../util.js')
 
 test('zerotap outputs TAP', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
   h.add('one', (t) => {
     t.ok(true)
   }, true)
@@ -34,7 +34,7 @@ test('zerotap outputs TAP', (assert) => {
 })
 
 test('zerotap with two blocks', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
   h.add('one', (t) => {
     t.ok(true)
   }, true)
@@ -65,7 +65,7 @@ test('zerotap with two blocks', (assert) => {
 })
 
 test('zerotap handles failures', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
   h.add('zero', (t) => {
     t.ok(true)
   }, true)
@@ -100,7 +100,7 @@ test('zerotap handles failures', (assert) => {
                   at Test.equal ($TAPE/index.js:$LINE:$COL)
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
           ...
 
         1..3
@@ -113,7 +113,7 @@ test('zerotap handles failures', (assert) => {
 })
 
 test('zerotap handles errors', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
   h.add('zero', function _ (t) {
     t.ifError(new Error('foo'))
   }, true)
@@ -136,7 +136,7 @@ test('zerotap handles errors', (assert) => {
               Error: foo
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (internal/timers.js:$LINE:$COL)
                   at processTimers (internal/timers.js:$LINE:$COL)
@@ -152,7 +152,7 @@ test('zerotap handles errors', (assert) => {
 })
 
 test('zerotap handles multiple asserts', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
 
   h.add('test one', function _ (t) {
     t.ok(true)
@@ -182,7 +182,7 @@ test('zerotap handles multiple asserts', (assert) => {
                   at Test.ok ($TAPE/index.js:$LINE:$COL)
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (internal/timers.js:$LINE:$COL)
                   at processTimers (internal/timers.js:$LINE:$COL)
@@ -199,7 +199,7 @@ test('zerotap handles multiple asserts', (assert) => {
 })
 
 test('zerotap with multiple blocks', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
 
   h.add('test one', (t) => {
     t.ok(true, 'message one')
@@ -234,7 +234,7 @@ test('zerotap with multiple blocks', (assert) => {
 })
 
 test('zerotap other methods', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
 
   h.add('test one', (t) => {
     t.ok(true)
@@ -273,7 +273,7 @@ test('zerotap other methods', (assert) => {
 })
 
 test('zerotap undefined is string', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
 
   h.add('test one', (t) => {
     t.equal(undefined, 'foo')
@@ -299,7 +299,7 @@ test('zerotap undefined is string', (assert) => {
                   at Test.equal ($TAPE/index.js:$LINE:$COL)
                   at Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (internal/timers.js:$LINE:$COL)
                   at processTimers (internal/timers.js:$LINE:$COL)
@@ -315,7 +315,7 @@ test('zerotap undefined is string', (assert) => {
 })
 
 test('zerotap fail', (assert) => {
-  const h = new Harness(collect(verify))
+  const h = new TestRunner(collect(verify))
 
   h.add('test one', function _ (t) {
     t.fail('my message')
@@ -341,7 +341,7 @@ test('zerotap fail', (assert) => {
                   at Test.fail ($TAPE/index.js:$LINE:$COL)
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at Harness.run ($TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (internal/timers.js:$LINE:$COL)
                   at processTimers (internal/timers.js:$LINE:$COL)

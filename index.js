@@ -30,15 +30,15 @@ class Test {
    * @constructor
    * @param {string} name
    * @param {TestFn} fn
-   * @param {Harness} h
+   * @param {TestRunner} runner
    */
-  constructor (name, fn, h) {
+  constructor (name, fn, runner) {
     /** @type {string} */
     this.name = name
     /** @type {TestFn} */
     this.fn = fn
-    /** @type {Harness} */
-    this.harness = h
+    /** @type {TestRunner} */
+    this.runner = runner
     /** @type {{ pass: number, fail: number }} */
     this._result = {
       pass: 0,
@@ -53,7 +53,7 @@ class Test {
    * @returns {void}
    */
   comment (msg) {
-    this.harness.report('# ' + msg)
+    this.runner.report('# ' + msg)
   }
 
   /**
@@ -166,10 +166,10 @@ class Test {
       )
     }
 
-    const report = this.harness.report
+    const report = this.runner.report
 
     const prefix = pass ? 'ok' : 'not ok'
-    const id = this.harness.nextId()
+    const id = this.runner.nextId()
     report(`${prefix} ${id} ${description}`)
 
     if (pass) {
@@ -222,7 +222,7 @@ class Test {
    * }>}
    */
   async run () {
-    this.harness.report('# ' + this.name)
+    this.runner.report('# ' + this.name)
     const maybeP = this.fn(this)
     if (maybeP && typeof maybeP.then === 'function') {
       await maybeP
@@ -231,6 +231,7 @@ class Test {
     return this._result
   }
 }
+exports.Test = Test
 
 /**
  * @returns {string}
@@ -288,7 +289,7 @@ function findAtLineFromError (e) {
 /**
  * @class
  */
-class Harness {
+class TestRunner {
   /**
    * @constructor
    * @param {(lines: string) => void} [report]
@@ -392,7 +393,7 @@ class Harness {
     }
   }
 }
-exports.Harness = Harness
+exports.TestRunner = TestRunner
 
 /**
  * @param {string} line
@@ -402,7 +403,7 @@ function printLine (line) {
   console.log(line)
 }
 
-const GLOBAL_HARNESS = new Harness()
+const GLOBAL_TEST_RUNNER = new TestRunner()
 
 /**
  * @param {string} name
@@ -411,7 +412,7 @@ const GLOBAL_HARNESS = new Harness()
  */
 function test (name, fn) {
   if (!fn) return
-  GLOBAL_HARNESS.add(name, fn, false)
+  GLOBAL_TEST_RUNNER.add(name, fn, false)
 }
 exports.test = test
 
@@ -422,7 +423,7 @@ exports.test = test
  */
 function only (name, fn) {
   if (!fn) return
-  GLOBAL_HARNESS.add(name, fn, true)
+  GLOBAL_TEST_RUNNER.add(name, fn, true)
 }
 exports.only = only
 

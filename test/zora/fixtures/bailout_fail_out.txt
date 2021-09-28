@@ -8,7 +8,7 @@ $TAPE/index.js:$LINE
 Error: Oh no!
     at Test._ [as fn] ($TEST/zora/fixtures/bailout_fail.js:$LINE:$COL)
     at Test.run ($TAPE/index.js:$LINE:$COL)
-    at Harness.run ($TAPE/index.js:$LINE:$COL)
+    at TestRunner.run ($TAPE/index.js:$LINE:$COL)
     at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
     at listOnTimeout (internal/timers.js:$LINE:$COL)
     at processTimers (internal/timers.js:$LINE:$COL)
