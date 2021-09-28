@@ -84,3 +84,25 @@ Small library, small install size.
 |pkg size|  [![mocha](https://packagephobia.now.sh/badge?p=mocha)](https://packagephobia.now.sh/result?p=mocha)  |  [![ava](https://packagephobia.now.sh/badge?p=ava)](https://packagephobia.now.sh/result?p=ava) |  [![jest](https://packagephobia.now.sh/badge?p=jest)](https://packagephobia.now.sh/result?p=jest) |  [![tap](https://packagephobia.now.sh/badge?p=tap)](https://packagephobia.now.sh/result?p=tap) |
 |Min.js size|  [![mocha](https://badgen.net/bundlephobia/min/mocha)](https://bundlephobia.com/result?p=mocha)  |  [![ava](https://badgen.net/bundlephobia/min/ava)](https://bundlephobia.com/result?p=ava)  |  [![jest](https://badgen.net/bundlephobia/min/jest)](https://bundlephobia.com/result?p=jest)  |  [![tap](https://badgen.net/bundlephobia/min/tap)](https://bundlephobia.com/result?p=tap)  |
 |dep count|  [![mocha](https://badgen.net/badge/dependencies/104/red)](https://www.npmjs.com/package/mocha)  |  [![ava](https://badgen.net/badge/dependencies/300/red)](https://www.npmjs.com/package/ava)  |  [![jest](https://badgen.net/badge/dependencies/799/red)](https://www.npmjs.com/package/jest)  |  [![tap](https://badgen.net/badge/dependencies/390/red)](https://www.npmjs.com/package/tap)  |
+
+## Docs
+
+```js
+const test = require('tapzero').test
+```
+
+### `test(name, [fn])`
+
+Run a single named test case. The `fn` will be called with the `t` test object.
+
+Tests run one at a time and complete when the `fn` completes, the `fn` can be async.
+
+### `test.only(name, fn)`
+
+Like `test(name, fn)` except if you use `.only` this is the only test case that will run for the entire process, all other test cases using tape will be ignored.
+
+### `test.skip(name, [fn])`
+
+Creates a test case that will be skipped
+
+
