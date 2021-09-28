@@ -2,11 +2,6 @@
 
 // @ts-check
 
-/**
- * TODO: @Raynos ; change the jsdoc plugin about class fields
- * TODO: @Raynos ; add support for callsites to type-coverage
- */
-
 const deepEqual = require('./fast-deep-equal')
 
 const NEW_LINE_REGEX = /\n/g
@@ -377,7 +372,24 @@ class Harness {
       this.report('')
       this.report('# ok')
     }
-    // TODO: exitCode
+
+    if (typeof process !== 'undefined' &&
+      process &&
+      typeof process.exit === 'function' &&
+      typeof process.on === 'function' &&
+      Reflect.get(process, 'browser') !== true
+    ) {
+      process.on('exit', function (code) {
+        // let the process exit cleanly.
+        if (typeof code === 'number' && code !== 0) {
+          return
+        }
+
+        if (fail) {
+          process.exit(1)
+        }
+      })
+    }
   }
 }
 exports.Harness = Harness
