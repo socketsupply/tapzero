@@ -146,9 +146,9 @@ class TapeHarness {
     const ret = harness.bootstrap(onHarness)
     if (ret && ret.then) {
       ret.then(function success () {
-        process.nextTick(onHarness)
+        setTimeout(onHarness, 0)
       }, function fail (promiseError) {
-        process.nextTick(onHarness, promiseError)
+        setTimeout(onHarness, 0, promiseError)
       })
     }
 
@@ -172,23 +172,23 @@ class TapeHarness {
               })
             }
 
-            process.nextTick(() => {
+            setTimeout(() => {
               throw promiseError
-            })
+            }, 0)
           })
           if (ret && ret.then) {
             ret.then(() => {
-              process.nextTick(() => {
+              setTimeout(() => {
                 throw promiseError
-              })
+              }, 0)
             }, (/** @type {Error} */ _failure) => {
               console.error('TestHarness.close() has an err', {
                 error: _failure
               })
 
-              process.nextTick(() => {
+              setTimeout(() => {
                 throw promiseError
-              })
+              }, 0)
             })
           }
         })
@@ -210,9 +210,9 @@ class TapeHarness {
       })
       if (ret && ret.then) {
         ret.then(() => {
-          process.nextTick(onEnd)
+          setTimeout(onEnd, 0)
         }, (/** @type {Error} */ promiseError) => {
-          process.nextTick(onEnd, promiseError, err)
+          setTimeout(onEnd, 0, promiseError, err)
         })
       }
     }
@@ -229,3 +229,4 @@ class TapeHarness {
     }
   }
 }
+
