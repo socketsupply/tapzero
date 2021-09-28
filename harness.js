@@ -48,12 +48,12 @@ module.exports = wrapHarness
 
 /**
  * @template {Harness} T
- * @param {import('./index.js')} tape
+ * @param {import('./index.js')} tapzero
  * @param {new (options: object) => T} Harness
  * @returns {TapeTestFn<T>}
  */
-function wrapHarness (tape, Harness) {
-  const harness = new TapeHarness(tape, Harness)
+function wrapHarness (tapzero, Harness) {
+  const harness = new TapeHarness(tapzero, Harness)
 
   test.only = harness.only.bind(harness)
   test.skip = harness.skip.bind(harness)
