@@ -44,6 +44,7 @@
   },
   "files": [
     "index.js",
+    "harness.js",
     "fast-deep-equal.js"
   ],
   "author": "Raynos <raynos2@gmail.com>",
