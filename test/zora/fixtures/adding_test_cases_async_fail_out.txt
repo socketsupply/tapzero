@@ -1,0 +1,19 @@
+TAP version 13
+# tester sync
+ok 1 assert1
+
+1..1
+# tests 1
+# pass  1
+
+# ok
+$TAPE/index.js:$LINE
+      throw new Error('Cannot add() a test case after tests completed.')
+      ^
+
+Error: Cannot add() a test case after tests completed.
+    at TestRunner.add ($TAPE/index.js:$LINE:$COL)
+    at test ($TAPE/index.js:$LINE:$COL)
+    at Timeout._onTimeout ($TEST/zora/fixtures/adding_test_cases_async_fail.js:$LINE:$COL)
+    at listOnTimeout (internal/timers.js:$LINE:$COL)
+    at processTimers (internal/timers.js:$LINE:$COL)

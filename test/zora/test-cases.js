@@ -60,6 +60,10 @@ function equalDiff (t, actual, expected) {
       process.stderr.write(str.replace(/\n/g, '    \n'))
     })
     process.stderr.write(gray('-------------------------\n'))
+
+    console.log('-------raw actual-----')
+    console.log(actual)
+    console.log('------------------------')
   }
 }
 

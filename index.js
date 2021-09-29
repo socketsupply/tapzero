@@ -306,6 +306,8 @@ class TestRunner {
     this.scheduled = false
     /** @type {number} */
     this._id = 0
+    /** @type {boolean} */
+    this.completed = false
   }
 
   /**
@@ -322,7 +324,10 @@ class TestRunner {
    * @returns {void}
    */
   add (name, fn, only) {
-    // TODO: calling add() after run()
+    if (this.completed) {
+      // TODO: calling add() after run()
+      throw new Error('Cannot add() a test case after tests completed.')
+    }
     const self = this
     const t = new Test(name, fn, this)
     const arr = only ? this.onlyTests : this.tests
@@ -362,6 +367,8 @@ class TestRunner {
       success += result.pass
       fail += result.fail
     }
+
+    this.completed = true
 
     this.report('')
     this.report(`1..${total}`)
