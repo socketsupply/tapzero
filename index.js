@@ -138,7 +138,7 @@ class Test {
   }
 
   /**
-   * @param {Error | null} err
+   * @param {Error | null | undefined} err
    * @param {string} [msg]
    * @returns {void}
    */
