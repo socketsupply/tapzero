@@ -149,6 +149,40 @@ class Test {
   }
 
   /**
+   * @param {Function} fn
+   * @param {RegExp | any} [expected]
+   * @param {string} [message]
+   * @returns {void}
+   */
+  throws (fn, expected, message) {
+    if (typeof expected === 'string') {
+      message = expected
+      expected = undefined
+    }
+
+    /** @type {Error | null} */
+    let caught = null
+    try {
+      fn()
+    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      caught = /** @type {Error} */ (err)
+    }
+
+    let pass = !!caught
+
+    if (expected instanceof RegExp) {
+      pass = !!(caught && expected.test(caught.message))
+    } else if (expected) {
+      throw new Error(`t.throws() not implemented for expected: ${typeof expected}`)
+    }
+
+    this._assert(
+      pass, caught, expected, message || 'show throw', 'throws'
+    )
+  }
+
+  /**
    * @param {boolean} pass
    * @param {unknown} actual
    * @param {unknown} expected
