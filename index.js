@@ -450,17 +450,6 @@ const GLOBAL_TEST_RUNNER = new TestRunner()
  * @param {TestFn} [fn]
  * @returns {void}
  */
-function test (name, fn) {
-  if (!fn) return
-  GLOBAL_TEST_RUNNER.add(name, fn, false)
-}
-exports.test = test
-
-/**
- * @param {string} name
- * @param {TestFn} [fn]
- * @returns {void}
- */
 function only (name, fn) {
   if (!fn) return
   GLOBAL_TEST_RUNNER.add(name, fn, true)
@@ -474,6 +463,25 @@ exports.only = only
  */
 function skip (_name, _fn) {}
 exports.skip = skip
+
+/**
+ * @type {{
+ *    (name: string, fn?: TestFn): void
+ *    only(name: string, fn?: TestFn): void
+ *    skip(name: string, fn?: TestFn): void
+ * }}
+ *
+ * @param {string} name
+ * @param {TestFn} [fn]
+ * @returns {void}
+ */
+function test (name, fn) {
+  if (!fn) return
+  GLOBAL_TEST_RUNNER.add(name, fn, false)
+}
+test.only = only
+test.skip = skip
+exports.test = test
 
 /**
  * @param {Error} err
