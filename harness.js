@@ -12,35 +12,33 @@
 /**
  * @template {Harness} T
  * @typedef {{
-      (
-        name: string,
-        cb?: (harness: T, test: Test) => (void | Promise<void>)
-      ): void;
-      (
-        name: string,
-        opts: object,
-        cb: (harness: T, test: Test) => (void | Promise<void>)
-      ): void;
-
-      only(
-        name: string,
-        cb?: (harness: T, test: Test) => (void | Promise<void>)
-      ): void;
-      only(
-        name: string,
-        opts: object,
-        cb: (harness: T, test: Test) => (void | Promise<void>)
-      ): void;
-
-      skip(
-        name: string,
-        cb?: (harness: T, test: Test) => (void | Promise<void>)
-      ): void;
-      skip(
-        name: string,
-        opts: object,
-        cb: (harness: T, test: Test) => (void | Promise<void>)
-      ): void;
+ *    (
+ *      name: string,
+ *      cb?: (harness: T, test: Test) => (void | Promise<void>)
+ *    ): void;
+ *    (
+ *      name: string,
+ *      opts: object,
+ *      cb: (harness: T, test: Test) => (void | Promise<void>)
+ *    ): void;
+ *    only(
+ *      name: string,
+ *      cb?: (harness: T, test: Test) => (void | Promise<void>)
+ *    ): void;
+ *    only(
+ *      name: string,
+ *      opts: object,
+ *      cb: (harness: T, test: Test) => (void | Promise<void>)
+ *    ): void;
+ *    skip(
+ *      name: string,
+ *      cb?: (harness: T, test: Test) => (void | Promise<void>)
+ *    ): void;
+ *    skip(
+ *      name: string,
+ *      opts: object,
+ *      cb: (harness: T, test: Test) => (void | Promise<void>)
+ *    ): void;
  * }} TapeTestFn
  */
 
@@ -49,11 +47,11 @@ module.exports = wrapHarness
 /**
  * @template {Harness} T
  * @param {import('./index.js')} tapzero
- * @param {new (options: object) => T} Harness
+ * @param {new (options: object) => T} harnessClass
  * @returns {TapeTestFn<T>}
  */
-function wrapHarness (tapzero, Harness) {
-  const harness = new TapeHarness(tapzero, Harness)
+function wrapHarness (tapzero, harnessClass) {
+  const harness = new TapeHarness(tapzero, harnessClass)
 
   test.only = harness.only.bind(harness)
   test.skip = harness.skip.bind(harness)
@@ -64,6 +62,7 @@ function wrapHarness (tapzero, Harness) {
    * @param {string} testName
    * @param {object} [options]
    * @param {(harness: T, test: Test) => (void | Promise<void>)} [fn]
+   * @returns {void}
    */
   function test (testName, options, fn) {
     return harness.test(testName, options, fn)
@@ -76,17 +75,20 @@ function wrapHarness (tapzero, Harness) {
 class TapeHarness {
   /**
    * @param {import('./index.js')} tapzero
-   * @param {new (options: object) => T} Harness
+   * @param {new (options: object) => T} harnessClass
    */
-  constructor (tapzero, Harness) {
+  constructor (tapzero, harnessClass) {
+    /** @type {import('./index.js')} */
     this.tapzero = tapzero
-    this.Harness = Harness
+    /** @type {new (options: object) => T} */
+    this.harnessClass = harnessClass
   }
 
   /**
    * @param {string} testName
    * @param {object} [options]
    * @param {(harness: T, test: Test) => (void | Promise<void>)} [fn]
+   * @returns {void}
    */
   test (testName, options, fn) {
     this._test(this.tapzero.test, testName, options, fn)
@@ -96,6 +98,7 @@ class TapeHarness {
    * @param {string} testName
    * @param {object} [options]
    * @param {(harness: T, test: Test) => (void | Promise<void>)} [fn]
+   * @returns {void}
    */
   only (testName, options, fn) {
     this._test(this.tapzero.only, testName, options, fn)
@@ -105,6 +108,7 @@ class TapeHarness {
    * @param {string} testName
    * @param {object} [options]
    * @param {(harness: T, test: Test) => (void | Promise<void>)} [fn]
+   * @returns {void}
    */
   skip (testName, options, fn) {
     this._test(this.tapzero.skip, testName, options, fn)
@@ -115,6 +119,7 @@ class TapeHarness {
    * @param {string} testName
    * @param {object} [options]
    * @param {(harness: T, test: Test) => (void | Promise<void>)} [fn]
+   * @returns {void}
    */
   _test (tapzeroFn, testName, options, fn) {
     if (!fn && typeof options === 'function') {
@@ -139,12 +144,14 @@ class TapeHarness {
    * @param {object} options
    * @param {(harness: T, test: Test) => (void | Promise<void>)} fn
    * @param {() => void} cb
+   * @returns {void}
    */
   _onAssert (assert, options, fn, cb) {
     Reflect.set(options, 'assert', assert)
-    const harness = new this.Harness(options)
+    const Harness = this.harnessClass
+    const harness = new Harness(options)
     const ret = harness.bootstrap(onHarness)
-    if (ret && ret.then) {
+    if (ret && Reflect.get(ret, 'then')) {
       ret.then(function success () {
         setTimeout(onHarness, 0)
       }, function fail (promiseError) {
@@ -154,6 +161,7 @@ class TapeHarness {
 
     /**
      * @param {Error} [err]
+     * @returns {void}
      */
     function onHarness (err) {
       if (err) {
@@ -161,7 +169,7 @@ class TapeHarness {
       }
 
       const ret = fn(harness, assert)
-      if (ret && ret.then) {
+      if (ret && Reflect.get(ret, 'then')) {
         ret.then(function onComplete () {
           asyncEnd()
         }, function fail (promiseError) {
@@ -176,7 +184,7 @@ class TapeHarness {
               throw promiseError
             }, 0)
           })
-          if (ret && ret.then) {
+          if (ret && Reflect.get(ret, 'then')) {
             ret.then(() => {
               setTimeout(() => {
                 throw promiseError
@@ -199,6 +207,7 @@ class TapeHarness {
 
     /**
      * @param {Error} [err]
+     * @returns {void}
      */
     function asyncEnd (err) {
       if (err) {
@@ -208,7 +217,7 @@ class TapeHarness {
       const ret = harness.close((err2) => {
         onEnd(err2)
       })
-      if (ret && ret.then) {
+      if (ret && Reflect.get(ret, 'then')) {
         ret.then(() => {
           setTimeout(onEnd, 0)
         }, (/** @type {Error} */ promiseError) => {
@@ -219,6 +228,7 @@ class TapeHarness {
 
     /**
      * @param {Error} [err2]
+     * @returns {void}
      */
     function onEnd (err2) {
       if (err2) {

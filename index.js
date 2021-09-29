@@ -382,7 +382,6 @@ class TestRunner {
     }
 
     if (typeof process !== 'undefined' &&
-      process &&
       typeof process.exit === 'function' &&
       typeof process.on === 'function' &&
       Reflect.get(process, 'browser') !== true

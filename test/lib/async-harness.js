@@ -11,10 +11,15 @@ class AsyncHarness {
    * @param {{ port?: number }} opts
    */
   constructor (opts) {
+    /** @type {number} */
     this.port = opts.port || 0
+    /** @type {import('http').Server} */
     this.server = http.createServer()
 
-    this.server.on('request', (req, res) => {
+    this.server.on('request', (
+      /** @type {import('http').IncomingMessage} */ req,
+      /** @type {import('http').ServerResponse} */ res
+    ) => {
       res.end(req.url)
     })
   }
