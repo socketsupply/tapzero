@@ -120,9 +120,9 @@ class TapeHarness {
    * @param {string} testName
    * @param {object} [options]
    * @param {(harness: T, test: Test) => (void | Promise<void>)} [fn]
-   * @returns {Promise<void>}
+   * @returns {void}
    */
-  async _test (tapzeroFn, testName, options, fn) {
+  _test (tapzeroFn, testName, options, fn) {
     if (!fn && typeof options === 'function') {
       fn = /** @type {(h: T, test: Test) => void} */ (options)
       options = {}
