@@ -10,11 +10,10 @@ const util = require('util')
 const request = require('request')
 
 const AsyncHarness = require('./lib/async-harness.js')
-const MyTestHarness = require('./lib/test-harness.js')
 
 const promiseRequest = util.promisify(request)
 
-MyTestHarness.test('a test', {
+AsyncHarness.test('a test', {
   port: 8301
 }, async (harness, assert) => {
   return new Promise((resolve) => {
@@ -31,7 +30,7 @@ MyTestHarness.test('a test', {
   })
 })
 
-MyTestHarness.test('no options', async (harness, assert) => {
+AsyncHarness.test('no options', async (harness, assert) => {
   return new Promise((resolve) => {
     request({
       url: `http://localhost:${harness.port}/foo`
@@ -46,7 +45,7 @@ MyTestHarness.test('no options', async (harness, assert) => {
   })
 })
 
-MyTestHarness.test('async await', async (harness, assert) => {
+AsyncHarness.test('async await', async (harness, assert) => {
   const resp = await promiseRequest({
     url: `http://localhost:${harness.port}/foo`
   })
@@ -55,7 +54,7 @@ MyTestHarness.test('async await', async (harness, assert) => {
   assert.equal(resp.body, '/foo')
 })
 
-MyTestHarness.test('async await no end',
+AsyncHarness.test('async await no end',
   async function t (harness, assert) {
     const resp = await promiseRequest({
       url: `http://localhost:${harness.port}/foo`
@@ -65,7 +64,7 @@ MyTestHarness.test('async await no end',
     assert.equal(resp.body, '/foo')
   })
 
-MyTestHarness.test('no function name')
+AsyncHarness.test('no function name')
 
 AsyncHarness.test(
   'async await promise',

@@ -137,7 +137,7 @@ test('zerotap handles errors', (assert) => {
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
-                  at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
+                  at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (internal/timers.js:$LINE:$COL)
                   at processTimers (internal/timers.js:$LINE:$COL)
           ...
@@ -183,7 +183,7 @@ test('zerotap handles multiple asserts', (assert) => {
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
-                  at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
+                  at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (internal/timers.js:$LINE:$COL)
                   at processTimers (internal/timers.js:$LINE:$COL)
           ...
@@ -300,7 +300,7 @@ test('zerotap undefined is string', (assert) => {
                   at Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
-                  at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
+                  at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (internal/timers.js:$LINE:$COL)
                   at processTimers (internal/timers.js:$LINE:$COL)
           ...
@@ -342,7 +342,7 @@ test('zerotap fail', (assert) => {
                   at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run ($TAPE/index.js:$LINE:$COL)
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
-                  at Timeout.run [as _onTimeout] ($TAPE/index.js:$LINE:$COL)
+                  at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (internal/timers.js:$LINE:$COL)
                   at processTimers (internal/timers.js:$LINE:$COL)
           ...
