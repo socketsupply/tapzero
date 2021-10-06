@@ -342,6 +342,8 @@ class TestRunner {
     this._id = 0
     /** @type {boolean} */
     this.completed = false
+    /** @type {boolean} */
+    this.rethrowExceptions = true
   }
 
   /**
@@ -362,20 +364,17 @@ class TestRunner {
       // TODO: calling add() after run()
       throw new Error('Cannot add() a test case after tests completed.')
     }
-    const self = this
     const t = new Test(name, fn, this)
     const arr = only ? this.onlyTests : this.tests
     arr.push(t)
     if (!this.scheduled) {
       this.scheduled = true
-      setTimeout(run, 0)
-    }
-
-    /**
-     * @returns {void}
-     */
-    function run () {
-      self.run().then(null, rethrowImmediate)
+      setTimeout(() => {
+        const promise = this.run()
+        if (this.rethrowExceptions) {
+          promise.then(null, rethrowImmediate)
+        }
+      }, 0)
     }
   }
 
@@ -444,6 +443,7 @@ function printLine (line) {
 }
 
 const GLOBAL_TEST_RUNNER = new TestRunner()
+exports.GLOBAL_TEST_RUNNER = GLOBAL_TEST_RUNNER
 
 /**
  * @param {string} name
