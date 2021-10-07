@@ -1,11 +1,12 @@
+// @ts-check
 'use strict'
 
 /**
  * @typedef {import('./index').Test} Test
  * @typedef {(t: Test) => Promise<void> | void} TestCase
  * @typedef {{
- *    bootstrap(cb?: (e?: Error) => void): void | Promise<void>
- *    close(cb?: (e?: Error) => void): void | Promise<void>
+ *    bootstrap(): Promise<void>
+ *    close(): Promise<void>
  * }} Harness
  */
 
@@ -132,10 +133,8 @@ class TapeHarness {
     }
     const testFn = fn
 
-    tapzeroFn(testName, (assert) => {
-      return new Promise((resolve) => {
-        this._onAssert(assert, options || {}, testFn, resolve)
-      })
+    tapzeroFn(testName, async (assert) => {
+      return this._onAssert(assert, options || {}, testFn)
     })
   }
 
@@ -143,99 +142,20 @@ class TapeHarness {
    * @param {Test} assert
    * @param {object} options
    * @param {(harness: T, test: Test) => (void | Promise<void>)} fn
-   * @param {() => void} cb
-   * @returns {void}
+   * @returns {Promise<void>}
    */
-  _onAssert (assert, options, fn, cb) {
+  async _onAssert (assert, options, fn) {
     Reflect.set(options, 'assert', assert)
+
     const Harness = this.harnessClass
     const harness = new Harness(options)
-    const ret = harness.bootstrap(onHarness)
-    if (ret && Reflect.get(ret, 'then')) {
-      ret.then(function success () {
-        setTimeout(onHarness, 0)
-      }, function fail (promiseError) {
-        setTimeout(onHarness, 0, promiseError)
-      })
-    }
 
-    /**
-     * @param {Error} [err]
-     * @returns {void}
-     */
-    function onHarness (err) {
-      if (err) {
-        return assert.ifError(err)
-      }
+    await harness.bootstrap()
 
-      const ret = fn(harness, assert)
-      if (ret && Reflect.get(ret, 'then')) {
-        ret.then(function onComplete () {
-          asyncEnd()
-        }, function fail (promiseError) {
-          const ret = harness.close((err2) => {
-            if (err2) {
-              console.error('TestHarness.close() has an err', {
-                error: err2
-              })
-            }
-
-            setTimeout(() => {
-              throw promiseError
-            }, 0)
-          })
-          if (ret && Reflect.get(ret, 'then')) {
-            ret.then(() => {
-              setTimeout(() => {
-                throw promiseError
-              }, 0)
-            }, (/** @type {Error} */ _failure) => {
-              console.error('TestHarness.close() has an err', {
-                error: _failure
-              })
-
-              setTimeout(() => {
-                throw promiseError
-              }, 0)
-            })
-          }
-        })
-      } else {
-        asyncEnd()
-      }
-    }
-
-    /**
-     * @param {Error} [err]
-     * @returns {void}
-     */
-    function asyncEnd (err) {
-      if (err) {
-        assert.ifError(err)
-      }
-
-      const ret = harness.close((err2) => {
-        onEnd(err2)
-      })
-      if (ret && Reflect.get(ret, 'then')) {
-        ret.then(() => {
-          setTimeout(onEnd, 0)
-        }, (/** @type {Error} */ promiseError) => {
-          setTimeout(onEnd, 0, promiseError, err)
-        })
-      }
-    }
-
-    /**
-     * @param {Error} [err2]
-     * @returns {void}
-     */
-    function onEnd (err2) {
-      if (err2) {
-        assert.ifError(err2)
-      }
-
-      cb()
+    try {
+      await fn(harness, assert)
+    } finally {
+      await harness.close()
     }
   }
 }
