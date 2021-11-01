@@ -46,6 +46,9 @@ class Test {
     }
     /** @type {boolean} */
     this.done = false
+
+    /** @type {boolean} */
+    this.strict = runner.strict
   }
 
   /**
@@ -64,7 +67,7 @@ class Test {
    * @returns {void}
    */
   deepEqual (actual, expected, msg) {
-    // deepEqual('foo', 'bar')
+    if (this.strict && !msg) throw new Error('tapzero msg required')
     this._assert(
       deepEqual(actual, expected), actual, expected,
       msg || 'should be equivalent', 'deepEqual'
@@ -79,6 +82,7 @@ class Test {
    * @returns {void}
    */
   notDeepEqual (actual, expected, msg) {
+    if (this.strict && !msg) throw new Error('tapzero msg required')
     this._assert(
       !deepEqual(actual, expected), actual, expected,
       msg || 'should not be equivalent', 'notDeepEqual'
@@ -93,6 +97,7 @@ class Test {
    * @returns {void}
    */
   equal (actual, expected, msg) {
+    if (this.strict && !msg) throw new Error('tapzero msg required')
     this._assert(
       // eslint-disable-next-line eqeqeq
       actual == expected, actual, expected,
@@ -107,6 +112,7 @@ class Test {
    * @returns {void}
    */
   notEqual (actual, expected, msg) {
+    if (this.strict && !msg) throw new Error('tapzero msg required')
     this._assert(
       // eslint-disable-next-line eqeqeq
       actual != expected, actual, expected,
@@ -119,6 +125,7 @@ class Test {
    * @returns {void}
    */
   fail (msg) {
+    if (this.strict && !msg) throw new Error('tapzero msg required')
     this._assert(
       false, 'fail called', 'fail not called',
       msg || 'fail called', 'fail'
@@ -131,6 +138,7 @@ class Test {
    * @returns {void}
    */
   ok (actual, msg) {
+    if (this.strict && !msg) throw new Error('tapzero msg required')
     this._assert(
       !!actual, actual, 'truthy value',
       msg || 'should be truthy', 'ok'
@@ -143,6 +151,7 @@ class Test {
    * @returns {void}
    */
   ifError (err, msg) {
+    if (this.strict && !msg) throw new Error('tapzero msg required')
     this._assert(
       !err, err, 'no error', msg || String(err), 'ifError'
     )
@@ -159,6 +168,8 @@ class Test {
       message = expected
       expected = undefined
     }
+
+    if (this.strict && !message) throw new Error('tapzero msg required')
 
     /** @type {Error | null} */
     let caught = null
@@ -344,6 +355,8 @@ class TestRunner {
     this.completed = false
     /** @type {boolean} */
     this.rethrowExceptions = true
+    /** @type {boolean} */
+    this.strict = false
   }
 
   /**
@@ -463,6 +476,15 @@ exports.only = only
  */
 function skip (_name, _fn) {}
 exports.skip = skip
+
+/**
+ * @param {boolean} strict
+ * @returns {void}
+ */
+function setStrict (strict) {
+  GLOBAL_TEST_RUNNER.strict = strict
+}
+exports.setStrict = setStrict
 
 /**
  * @type {{
