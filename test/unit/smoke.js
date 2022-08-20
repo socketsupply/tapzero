@@ -138,8 +138,8 @@ test('zerotap handles errors', (assert) => {
                   at Test.run ($TAPE/index.js:$LINE:$COL)
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
-                  at listOnTimeout (node:internal/timers.js:$LINE:$COL)
-                  at processTimers (node:internal/timers.js:$LINE:$COL)
+                  at listOnTimeout (node:internal/timers:$LINE:$COL)
+                  at processTimers (node:internal/timers:$LINE:$COL)
           ...
 
         1..1
@@ -184,8 +184,8 @@ test('zerotap handles multiple asserts', (assert) => {
                   at Test.run ($TAPE/index.js:$LINE:$COL)
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
-                  at listOnTimeout (node:internal/timers.js:$LINE:$COL)
-                  at processTimers (node:internal/timers.js:$LINE:$COL)
+                  at listOnTimeout (node:internal/timers:$LINE:$COL)
+                  at processTimers (node:internal/timers:$LINE:$COL)
           ...
 
         1..3
@@ -301,8 +301,8 @@ test('zerotap undefined is string', (assert) => {
                   at Test.run ($TAPE/index.js:$LINE:$COL)
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
-                  at listOnTimeout (node:internal/timers.js:$LINE:$COL)
-                  at processTimers (node:internal/timers.js:$LINE:$COL)
+                  at listOnTimeout (node:internal/timers:$LINE:$COL)
+                  at processTimers (node:internal/timers:$LINE:$COL)
           ...
 
         1..1
@@ -343,8 +343,8 @@ test('zerotap fail', (assert) => {
                   at Test.run ($TAPE/index.js:$LINE:$COL)
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
-                  at listOnTimeout (node:internal/timers.js:$LINE:$COL)
-                  at processTimers (node:internal/timers.js:$LINE:$COL)
+                  at listOnTimeout (node:internal/timers:$LINE:$COL)
+                  at processTimers (node:internal/timers:$LINE:$COL)
           ...
 
         1..1
