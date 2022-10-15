@@ -1,3 +1,4 @@
 fast-deep-equal.js
 test/zora/fixtures
 coverage
+dist/*

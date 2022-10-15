@@ -2,12 +2,18 @@
   "name": "tapzero",
   "version": "0.6.1",
   "description": "Smallest test library",
-  "main": "index.js",
+  "main": "./dist/index.esm.js",
   "scripts": {
     "tsc": "npr tsc -p jsconfig.json --maxNodeModuleJsDepth 0",
     "lint": "npr tsdocstandard -v",
     "test": "npm run tsc && npm run lint && node test/harness.js && node test/index.js && npr type-coverage",
     "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    }
   },
   "typeCoverage": {
     "atLeast": 98,
@@ -29,6 +35,7 @@
     "@pre-bundled/tape": "4.11.0",
     "@types/node": "13.7.4",
     "diff": "4.0.2",
+    "esbuild": "^0.15.11",
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.10.1",
     "request": "2.88.2",

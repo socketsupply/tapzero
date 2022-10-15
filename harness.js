@@ -123,7 +123,7 @@ class TapeHarness {
    * @returns {void}
    */
   _test (tapzeroFn, testName, options, fn) {
-    if (!fn && typeof options === 'function') {
+    if (typeof options === 'function') {
       fn = /** @type {(h: T, test: Test) => void} */ (options)
       options = {}
     }
