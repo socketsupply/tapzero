@@ -10,5 +10,5 @@ Error: Oh no!
     at Test.run ($TAPE/index.js:$LINE:$COL)
     at TestRunner.run ($TAPE/index.js:$LINE:$COL)
     at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
-    at listOnTimeout (internal/timers.js:$LINE:$COL)
-    at processTimers (internal/timers.js:$LINE:$COL)
+    at listOnTimeout (node:internal/timers:$LINE:$COL)
+    at processTimers (node:internal/timers:$LINE:$COL)
