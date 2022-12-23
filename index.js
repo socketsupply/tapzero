@@ -450,12 +450,15 @@ class TestRunner {
       }
     }
   }
+
   /**
    * @param {(result: { total: number, success: number, fail: number }) => void} callback
    * @returns {void}
    */
   onFinish (callback) {
-    this._onFinishCallback = callback
+    if (typeof callback === 'function') {
+      this._onFinishCallback = callback
+    } else throw new Error('onFinish() expects a function')
   }
 }
 exports.TestRunner = TestRunner
