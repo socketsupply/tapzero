@@ -358,7 +358,7 @@ class TestRunner {
     /** @type {boolean} */
     this.strict = false
     /** @type {function | void} */
-    this.onFinish = undefined
+    this._onFinishCallback = undefined
   }
 
   /**
@@ -429,8 +429,8 @@ class TestRunner {
       this.report('# ok')
     }
 
-    if (this.onFinish) {
-      this.onFinish({ total, success, fail })
+    if (this._onFinishCallback) {
+      this._onFinishCallback({ total, success, fail })
     } else {
       if (typeof process !== 'undefined' &&
         typeof process.exit === 'function' &&
@@ -449,6 +449,13 @@ class TestRunner {
         })
       }
     }
+  }
+  /**
+   * @param {(result: { total: number, success: number, fail: number }) => void} callback
+   * @returns {void}
+   */
+  onFinish (callback) {
+    this._onFinishCallback = callback
   }
 }
 exports.TestRunner = TestRunner
