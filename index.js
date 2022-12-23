@@ -357,6 +357,8 @@ class TestRunner {
     this.rethrowExceptions = true
     /** @type {boolean} */
     this.strict = false
+    /** @type {function | void} */
+    this._onFinishCallback = undefined
   }
 
   /**
@@ -427,22 +429,36 @@ class TestRunner {
       this.report('# ok')
     }
 
-    if (typeof process !== 'undefined' &&
-      typeof process.exit === 'function' &&
-      typeof process.on === 'function' &&
-      Reflect.get(process, 'browser') !== true
-    ) {
-      process.on('exit', function (code) {
-        // let the process exit cleanly.
-        if (typeof code === 'number' && code !== 0) {
-          return
-        }
+    if (this._onFinishCallback) {
+      this._onFinishCallback({ total, success, fail })
+    } else {
+      if (typeof process !== 'undefined' &&
+        typeof process.exit === 'function' &&
+        typeof process.on === 'function' &&
+        Reflect.get(process, 'browser') !== true
+      ) {
+        process.on('exit', function (code) {
+          // let the process exit cleanly.
+          if (typeof code === 'number' && code !== 0) {
+            return
+          }
 
-        if (fail) {
-          process.exit(1)
-        }
-      })
+          if (fail) {
+            process.exit(1)
+          }
+        })
+      }
     }
+  }
+
+  /**
+   * @param {(result: { total: number, success: number, fail: number }) => void} callback
+   * @returns {void}
+   */
+  onFinish (callback) {
+    if (typeof callback === 'function') {
+      this._onFinishCallback = callback
+    } else throw new Error('onFinish() expects a function')
   }
 }
 exports.TestRunner = TestRunner
