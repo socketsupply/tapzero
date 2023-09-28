@@ -5,4 +5,3 @@ test('Plan an incorrect number of tests', t => {
     t.ok('example')
     t.ok('example')
 })
-
