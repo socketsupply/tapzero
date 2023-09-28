@@ -7,7 +7,7 @@ const test = require('@pre-bundled/tape')
 const { TestRunner } = require('../../index.js')
 const { collect, trimPrefix } = require('../util.js')
 
-test('zerotap outputs TAP', (assert) => {
+test('tapzero outputs TAP', (assert) => {
   const h = new TestRunner(collect(verify))
   h.add('one', (t) => {
     t.ok(true)
@@ -33,7 +33,7 @@ test('zerotap outputs TAP', (assert) => {
   }
 })
 
-test('zerotap with two blocks', (assert) => {
+test('tapzero with two blocks', (assert) => {
   const h = new TestRunner(collect(verify))
   h.add('one', (t) => {
     t.ok(true)
@@ -139,7 +139,7 @@ test('zerotap handles errors', (assert) => {
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (node:internal/timers:$LINE:$COL)
-                  at processTimers (node:internal/timers:$LINE:$COL)
+                  at process.processTimers (node:internal/timers:$LINE:$COL)
           ...
 
         1..1
@@ -185,7 +185,7 @@ test('zerotap handles multiple asserts', (assert) => {
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (node:internal/timers:$LINE:$COL)
-                  at processTimers (node:internal/timers:$LINE:$COL)
+                  at process.processTimers (node:internal/timers:$LINE:$COL)
           ...
 
         1..3
@@ -302,7 +302,7 @@ test('zerotap undefined is string', (assert) => {
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (node:internal/timers:$LINE:$COL)
-                  at processTimers (node:internal/timers:$LINE:$COL)
+                  at process.processTimers (node:internal/timers:$LINE:$COL)
           ...
 
         1..1
@@ -344,7 +344,7 @@ test('zerotap fail', (assert) => {
                   at TestRunner.run ($TAPE/index.js:$LINE:$COL)
                   at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (node:internal/timers:$LINE:$COL)
-                  at processTimers (node:internal/timers:$LINE:$COL)
+                  at process.processTimers (node:internal/timers:$LINE:$COL)
           ...
 
         1..1

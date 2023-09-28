@@ -1,0 +1,13 @@
+TAP version 13
+# Plan the correct number of tests
+ok 1 should be truthy
+ok 2 should be truthy
+# .plan with an async function
+ok 3 should be truthy
+ok 4 should be truthy
+
+1..4
+# tests 4
+# pass  4
+
+# ok

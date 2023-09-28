@@ -1,12 +1,15 @@
 TAP version 13
-# will not go to the end
-ok 1 okay
+# Execute fewer tests than planned
+ok 1 should be truthy
+ok 2 should be truthy
 $TAPE/index.js:$LINE
   function rethrow () { throw err }
                         ^
 
-Error: Oh no!
-    at Test._ [as fn] ($TEST/zora/fixtures/bailout_fail.js:$LINE:$COL)
+Error: Test ended before the planned number
+          planned: 3
+          actual: 2
+          
     at Test.run ($TAPE/index.js:$LINE:$COL)
     at TestRunner.run ($TAPE/index.js:$LINE:$COL)
     at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
