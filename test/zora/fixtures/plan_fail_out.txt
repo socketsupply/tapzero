@@ -1,0 +1,16 @@
+TAP version 13
+# Plan an incorrect number of tests
+ok 1 should be truthy
+$TAPE/index.js:$LINE
+  function rethrow () { throw err }
+                        ^
+
+Error: More tests than planned in TEST *Plan an incorrect number of tests*
+    at Test._assert ($TAPE/index.js:$LINE:$COL)
+    at Test.ok ($TAPE/index.js:$LINE:$COL)
+    at Test.fn ($TEST/zora/fixtures/plan_fail.js:$LINE:$COL)
+    at Test.run ($TAPE/index.js:$LINE:$COL)
+    at TestRunner.run ($TAPE/index.js:$LINE:$COL)
+    at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
+    at listOnTimeout (node:internal/timers:$LINE:$COL)
+    at process.processTimers (node:internal/timers:$LINE:$COL)
