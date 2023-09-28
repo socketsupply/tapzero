@@ -5,9 +5,9 @@ test('will not go to the end', function _(t) {
 
     throw new Error('Oh no!');
 
-    t.ok(true, 'will never be reached');
+    t.fail('should never be reached')
 });
 
 test('another one', t => {
-    t.ok(true, 'will never be reported');
+    t.fail('should never be reported');
 });

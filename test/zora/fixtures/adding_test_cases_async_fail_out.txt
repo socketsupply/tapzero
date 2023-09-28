@@ -16,4 +16,4 @@ Error: Cannot add() a test case after tests completed.
     at test ($TAPE/index.js:$LINE:$COL)
     at Timeout._onTimeout ($TEST/zora/fixtures/adding_test_cases_async_fail.js:$LINE:$COL)
     at listOnTimeout (node:internal/timers:$LINE:$COL)
-    at processTimers (node:internal/timers:$LINE:$COL)
+    at process.processTimers (node:internal/timers:$LINE:$COL)

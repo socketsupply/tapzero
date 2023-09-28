@@ -29,9 +29,11 @@ for (const file of JS_FILES) {
       const stripped = strip(info.combined)
 
       const expected = await readFile(
-        fileName.replace('.js', '_out.txt'), 'utf8'
+        fileName.replace('.js', '_out.txt'),
+        'utf8'
       )
-      equalDiff(t, stripped, expected)
+      // t.ok(stripped.includes(expected), 'output is a superset of expected text')
+      equalDiff(t, stripped.trim(), expected.trim())
     })().then(t.end, t.end)
   })
 }

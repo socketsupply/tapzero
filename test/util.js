@@ -62,7 +62,14 @@ function strip (line) {
     /, <anonymous>:\$LINE:\$COL\)$/, ')'
   )
 
-  const lines = withoutNestedLineNumbers.split('\n')
+  const withoutNodeVersion = withoutNestedLineNumbers.replace(
+    // new RegExp('Node.js*'),
+    /^Node.js.*$/gm,
+    ''
+  )
+
+  // const lines = withoutNestedLineNumbers.split('\n')
+  const lines = withoutNodeVersion.split('\n')
   const newLines = lines.filter((line) => {
     return !line.includes('internal/process/task_queues.js') &&
             !line.includes('internal/process/next_tick.js') &&
