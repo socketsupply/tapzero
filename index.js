@@ -301,7 +301,7 @@ class Test {
       if (this._planned > (this._actual || 0)) {
         throw new Error(`Test ended before the planned number
           planned: ${this._planned}
-          actual: ${this._actual}
+          actual: ${this._actual || 0}
           `
         )
       }

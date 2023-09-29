@@ -1,0 +1,16 @@
+TAP version 13
+# Make a plan, don't do any assertions
+$TAPE/index.js:$LINE
+  function rethrow () { throw err }
+                        ^
+
+Error: Test ended before the planned number
+          planned: 1
+          actual: 0
+          
+    at Test.run ($TAPE/index.js:$LINE:$COL)
+    at TestRunner.run ($TAPE/index.js:$LINE:$COL)
+    at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
+    at listOnTimeout (node:internal/timers:$LINE:$COL)
+    at process.processTimers (node:internal/timers:$LINE:$COL)
+    
