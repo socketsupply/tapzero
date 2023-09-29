@@ -47,8 +47,8 @@
     "fast-deep-equal.js"
   ],
   "author": "Raynos <raynos2@gmail.com>",
-  "repository": "git://github.com/socketsupply//tapzero.git",
-  "homepage": "https://github.com/socketsupply//tapzero",
+  "repository": "git://github.com/socketsupply/tapzero.git",
+  "homepage": "https://github.com/socketsupply/tapzero",
   "bugs": {
     "url": "https://github.com/socketsupply//tapzero/issues",
     "email": "raynos2@gmail.com"
@@ -61,7 +61,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/socketsupply//tapzero/raw/master/LICENSE"
+      "url": "http://github.com/socketsupply/tapzero/raw/master/LICENSE"
     }
   ]
 }
