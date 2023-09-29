@@ -1,6 +1,6 @@
 {
   "name": "@socketsupply/tapzero",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Smallest test library",
   "main": "index.js",
   "scripts": {
