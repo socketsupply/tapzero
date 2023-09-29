@@ -6,7 +6,7 @@ $TAPE/index.js:$LINE
 
 Error: Test ended before the planned number
           planned: 1
-          actual: null
+          actual: 0
           
     at Test.run ($TAPE/index.js:$LINE:$COL)
     at TestRunner.run ($TAPE/index.js:$LINE:$COL)
