@@ -19,6 +19,7 @@ tape('my test', (t) => {
   t.equal(2, 2, 'ok')
   t.end()
 })
+
 // Auto ending behavior on function completion
 tapzero('my test', (t) => {
   t.equal(2, 2, 'ok')
@@ -26,7 +27,9 @@ tapzero('my test', (t) => {
 })
 ```
 
-### End "automatically" if you do not call `t.plan`
+### End automatically
+Return a promise. The test will end when the promise resolves.
+
 ```js
 // tapzero "auto" ends async tests when the async function completes
 tapzero('my cb test', async (t) => {
@@ -51,12 +54,16 @@ tapzero('planning example', t => {
 })
 ```
 
+### API
+No aliases, smaller API surface area
+
 ```js
 tape('my test', (t) => {
   t.equals(2, 2)
   t.is(2, 2)
   t.isEqual(2, 2)
 })
+
 tapzero('my test', (t) => {
   // tapzero does not implement any aliases, very small surface area.
   t.equal(2, 2)
